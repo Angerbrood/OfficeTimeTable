@@ -23,3 +23,20 @@ Funkcionális követelmények:
   * Bejárás hozzáadása
   * Bejárás törlése
   * Bejárás módosítása
+  
+Nem funkcionális követelmények:
+  * Könnyű áttekinthetőség: Színekkel típus szerint csoportosítás
+  * Használhatóság: Könnyű áttekinthetőség, ésszerű elrendezés, könnyen kezelhetőség
+  * Megbízhatóság: jelszóval védett funkciók, és a jelszavak védelme a háttérben. Hibásan bevitt adatok esetén a program jól láthatóan  jelezzen a felhasználónak, és emelje ki a hibás beviteli mezőket. A jól bevitt adatok maradjanak az űrlapban.
+  * Karbantarthatóság: könnyen lehessen bővíteni, a különböző típusú fájlok külön csoportosítva, ésszerűen legyenek felbontva, a könnyebb fejleszthetőség miatt
+  
+1.2. Használatieset-modell, funkcionális követelmények
+
+* A beosztottaknak és a munkáltatónak külön felülete lesz az adatok kezelésére, ami közös lesz mindkét félnek az a bejelentkezés.
+* Bejelentkezés nélkül elért oldalak
+ * Bejelentkezés
+* Bejelentkezéssel elért oldalak
+ * Munkáltató
+ * Beosztott
+
+ 
