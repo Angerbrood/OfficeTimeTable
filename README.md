@@ -39,4 +39,48 @@ Nem funkcionális követelmények:
  * Munkáltató
  * Beosztott
 
+
+## 2. Tervezés
+
+
+2.1. Architektúra terv
+
+
+2.1.1. Komponensdiagram
+
+
+2.1.2. Oldaltérkép
+
+2.2. Felhasználói-felület modell
+
+2.2.1.Oldalvázlatok
+
+
+2.2.2.Designtervek (végső megvalósítás kinézete)
+
+
+2.2.3. Osztálymodell
+
+
+2.2.4. Dinamikus működés
+
+## 3. Implementáció
+
+3.1.1. Fejlesztőkörnyezet
+
+
+3.1.2. Könyvtárstruktúra, funkciók
  
+## 4. Tesztelés
+
+4.1. Tesztelési környezetek
+
+4.2. Egységteszt
+
+4.3. Funkciónális teszetelés
+
+4.4.Tesztesetek
+
+## 5. Felhasználói dokumentáció
+
+## 6. Irodalomjegyzék
