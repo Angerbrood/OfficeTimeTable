@@ -61,7 +61,13 @@ Nem funkcionális követelmények:
 
 ![Alt text](/resources/Login.png?raw=true "Felhasználói-felület modell")
 ![Alt text](/resources/Admin.png?raw=true "Felhasználói-felület modell")
+![Alt text](/resources/Admin_Add_Worker.png?raw=true "Felhasználói-felület modell")
+![Alt text](/resources/Admin_Worker_Dates.png?raw=true "Felhasználói-felület modell")
 ![Alt text](/resources/Public.png?raw=true "Felhasználói-felület modell")
+![Alt text](/resources/Public_Add_Date.png?raw=true "Felhasználói-felület modell")
+![Alt text](/resources/Public_Modify_Data.png?raw=true "Felhasználói-felület modell")
+![Alt text](/resources/Public_Salary.png?raw=true "Felhasználói-felület modell")
+
 
 
 
