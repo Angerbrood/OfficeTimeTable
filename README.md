@@ -48,16 +48,21 @@ Nem funkcionális követelmények:
 
 2.1.1. Komponensdiagram
 
+![Alt text](/resources/components.png?raw=true "Komponensdiagram")
 
 2.1.2. Oldaltérkép
 
+![Alt text](/resources/user-story.png?raw=true "Adatmodel")
+
 2.2. Felhasználói-felület modell
 
-![Alt text](/resources/Login.png?raw=true "Adatmodel")
-![Alt text](/resources/Admin.png?raw=true "Adatmodel")
-![Alt text](/resources/Public.png?raw=true "Adatmodel")
-
 2.2.1.Oldalvázlatok
+
+
+![Alt text](/resources/Login.png?raw=true "Felhasználói-felület modell")
+![Alt text](/resources/Admin.png?raw=true "Felhasználói-felület modell")
+![Alt text](/resources/Public.png?raw=true "Felhasználói-felület modell")
+
 
 
 2.2.2.Designtervek (végső megvalósítás kinézete)
@@ -74,6 +79,7 @@ Nem funkcionális követelmények:
 3.1.1. Fejlesztőkörnyezet
 
 Használt IDE: Webstorm
+
 Használt verziókövető: GitHub
 
 
