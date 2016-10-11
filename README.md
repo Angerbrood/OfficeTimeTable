@@ -53,6 +53,10 @@ Nem funkcionális követelmények:
 
 2.2. Felhasználói-felület modell
 
+![Alt text](/resources/Login.png?raw=true "Adatmodel")
+![Alt text](/resources/Admin.png?raw=true "Adatmodel")
+![Alt text](/resources/Public.png?raw=true "Adatmodel")
+
 2.2.1.Oldalvázlatok
 
 
@@ -61,6 +65,7 @@ Nem funkcionális követelmények:
 
 2.2.3. Osztálymodell
 
+![Alt text](/resources/uml.png?raw=true "Adatmodel")
 
 2.2.4. Dinamikus működés
 
