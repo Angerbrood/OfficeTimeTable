@@ -68,6 +68,9 @@ Nem funkcionális követelmények:
 
 3.1.1. Fejlesztőkörnyezet
 
+Használt IDE: Webstorm
+Használt verziókövető: GitHub
+
 
 3.1.2. Könyvtárstruktúra, funkciók
  
