@@ -13,11 +13,39 @@
     {
         $("#add_worker").click(function()
         {
+            $("#get_worker_hours_class").hide();
+            $("#input_div_class").children().hide();
             $("#create_or_update_worker_class").show();
+        });
+        $("#modify_worker").click(function()
+        {
+            $("#get_worker_hours_class").hide();
+            $("#input_div_class").children().hide();
+
+            //Fill selector with workers
+            $("#worker_selector_class").show();
+            //If one selected then get the corresponding data
+            $("#create_or_update_worker_class").show();
+            //Do modifications
+
+
         });
         $("#delete_worker").click(function()
         {
-            $("#create_or_update_worker").hide();
+            $("#get_worker_hours_class").hide();
+            $("#input_div_class").children().hide();
+            //Fill selector
+            $("#delete_worker_class").show();
+            //Do delete
+        });
+        $("#get_worker_dates").click(function()
+        {
+            $("#input_div_class").children().hide();
+            //Fill selector
+            $("#worker_to_select").show();
+            //If seleted then show hours
+            $("#get_worker_hours_class").show();
+            //Do delete
         });
 
     });
@@ -32,47 +60,111 @@
             <ul class="dropdown-menu">
                 <li id="add_worker"><a href="#">Alkalmazott hozzáadása</a></li>
                 <li id ="delete_worker"><a href="#">Alkalmazott törlése</a></li>
-                <li><a href="#">Alkalmazott módosítása</a></li>
+                <li id ="modify_worker"><a href="#">Alkalmazott módosítása</a></li>
             </ul>
-            <input type="submit" class="btn btn-primary" value="Időpontok megtekintése">
+            <input type="submit" class="btn btn-primary" id="get_worker_dates" value="Időpontok megtekintése">
             <input type="submit" class="btn btn-danger" value="Kilépés">
         </div>
     </div>
 
-    <div class="create_or_update_worker" id="create_or_update_worker_class">
-        <div class="form-group">
-            <label for="name">Név:</label>
-            <input type="text" class="form-control" id="name">
-            <label for="age">Kor:</label>
-            <input type="text" class="form-control" id="age">
-            <label for="university">Egyetem:</label>
-            <input type="text" class="form-control" id="university">
-            <label for="position">Pozíció:</label>
-            <input type="text" class="form-control" id="position">
-            <label for="weekly_hour">Heti óraszám:</label>
-            <input type="text" class="form-control" id="weekly_hour">
-            <div class="form-select">
-                <label for="worker_status">Státus:</label>
-                <select class="form-control" id="worker_status">
-                    <option>Beosztott</option>
-                    <option>Vezető</option>
-                </select>
-            </div>
-        </div>
-        <div class="form-button" align="right">
-            <input type="submit" class="btn btn-primary" value="Hozzáadás">
-            <input type="submit" class="btn btn-danger" value="Reset">
-        </div>
-    </div>
-    <div class="delete_worker" id="delete_worker_class">
+    <div class ="worker_selector" id="worker_selector_class" style="display:none;">
         <div class="form-select">
-            <label for="worker_to_delete">Alkalmazott:</label>
-            <select class="form-control" id="worker_to_delete">
+            <label for="worker_to_select">Alkalmazott:</label>
+            <select class="form-control" id="worker_to_select">
                 <option>Alkalmazott</option>
             </select>
         </div>
     </div>
+    <div class="get_worker_hours" id="get_worker_hours_class" style="display: none">
+        <label for="name">Név:</label>
+        <input type="text" class="form-control" id="name_output" >
+        <label for="position">Pozíció:</label>
+        <input type="text" class="form-control" id="position_output">
+        <label for="weekly_hour">Heti óraszám:</label>
+        <input type="text" class="form-control" id="weekly_hour_output">
+        <table class="table table-bordered">
+            <tr>
+                <th>Óra</th>
+                <th>Hétfő</th>
+                <th>Kedd</th>
+                <th>Szerda</th>
+                <th>Csütörtök</th>
+                <th>Péntek</th>
+            </tr>
+            <tr>
+                <th>8:00</th>
+            </tr>
+            <tr>
+                <th>9:00</th>
+            </tr>
+            <tr>
+                <th>10:00</th>
+            </tr>
+            <tr>
+                <th>11:00</th>
+            </tr>
+            <tr>
+                <th>12:00</th>
+            </tr>
+            <tr>
+                <th>13:00</th>
+            </tr>
+            <tr>
+                <th>14:00</th>
+            </tr>
+            <tr>
+                <th>15:00</th>
+            </tr>
+            <tr>
+                <th>16:00</th>
+            </tr>
+            <tr>
+                <th>17:00</th>
+            </tr>
+            <tr>
+                <th>18:00</th>
+            </tr>
+        </table>
+    </div>
 
+
+
+    <div class="input_div" id ="input_div_class">
+
+        <div class="create_or_update_worker" id="create_or_update_worker_class" style="display: none" >
+            <div class="form-group">
+                <label for="name">Név:</label>
+                <input type="text" class="form-control" id="name">
+                <label for="age">Kor:</label>
+                <input type="text" class="form-control" id="age">
+                <label for="university">Egyetem:</label>
+                <input type="text" class="form-control" id="university">
+                <label for="position">Pozíció:</label>
+                <input type="text" class="form-control" id="position">
+                <label for="weekly_hour">Heti óraszám:</label>
+                <input type="text" class="form-control" id="weekly_hour">
+                <div class="form-select">
+                    <label for="worker_status">Státus:</label>
+                    <select class="form-control" id="worker_status">
+                        <option>Beosztott</option>
+                        <option>Vezető</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-button" align="right">
+                <input type="submit" class="btn btn-primary" value="Hozzáadás">
+                <input type="submit" class="btn btn-danger" value="Reset">
+            </div>
+        </div>
+        <div class="delete_worker" id="delete_worker_class" style="display: none">
+            <div class="form-select">
+                <label for="worker_to_delete">Alkalmazott:</label>
+                <select class="form-control" id="worker_to_delete">
+                    <option>Alkalmazott</option>
+                </select>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Törlés">
+        </div>
 </div>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

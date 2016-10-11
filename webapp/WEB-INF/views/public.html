@@ -6,7 +6,153 @@
     <title>Publikus felület</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+
+    $(document).ready(function()
+    {
+        $("#add_worker_date").click(function()
+        {
+            $("#password_div_class").hide();
+            $("#input_div_class").show();
+        });
+        $("#modify_worker_date").click(function()
+        {
+            $("#password_div_class").hide();
+            $("#input_div_class").show();
+        });
+        $("#set_password").click(function()
+        {
+            $("#input_div_class").hide();
+            $("#password_div_class").show();
+        });
+    });
+
+</script>
 <body>
+<div class="container">
+    <div class="page-header">
+        <h1 align="center">Részmunkaidős kezelőfelület</h1>
+
+        <input type="submit" class="btn btn-primary" id="add_worker_date" value="Időpont hozzáadása">
+        <input type="submit" class="btn btn-primary" id="modify_worker_date" value="Időpont módosítása">
+        <input type="submit" class="btn btn-primary" id="set_password" value="Bejelentkezési adatok módosítása">
+        <input type="submit" class="btn btn-danger" value="Kilépés">
+    </div>
+    <div class="password_div" id="password_div_class" style="display: none">
+        <label for="username">Felhasználónév:</label>
+        <input type="text" class="form-control" id="username" >
+        <label for="password">Jelszó:</label>
+        <input type="text" class="form-control" id="password">
+        <div class="save_button_div" align="right">
+            <p></p>
+            <input type="submit" class="btn btn-primary" value="Mentés">
+        </div>
+    </div>
+    <div class="input_div" id="input_div_class" style="display: none">
+        <table class="table table-bordered" id="timetable">
+            <tr>
+                <th>Óra</th>
+                <th>Hétfő</th>
+                <th>Kedd</th>
+                <th>Szerda</th>
+                <th>Csütörtök</th>
+                <th>Péntek</th>
+            </tr>
+            <tr>
+                <th>8:00</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+            </tr>
+            <tr>
+                <th>9:00</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+            </tr>
+            <tr>
+                <th>10:00</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+            </tr>
+            <tr>
+                <th>11:00</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+            </tr>
+            <tr>
+                <th>12:00</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+            </tr>
+            <tr>
+                <th>13:00</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+            </tr>
+            <tr>
+                <th>14:00</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+            </tr>
+            <tr>
+                <th>15:00</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+            </tr>
+            <tr>
+                <th>16:00</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+            </tr>
+            <tr>
+                <th>17:00</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+            </tr>
+            <tr>
+                <th>18:00</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+            </tr>
+        </table>
+    </div>
+</div>
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 </body>
 </html>
