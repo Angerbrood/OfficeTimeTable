@@ -56,11 +56,13 @@ Nem funkcionális követelmények:
 
 2.2. Felhasználói-felület modell
 
+2.2.1.Oldalvázlatok
+
+
 ![Alt text](/resources/Login.png?raw=true "Felhasználói-felület modell")
 ![Alt text](/resources/Admin.png?raw=true "Felhasználói-felület modell")
 ![Alt text](/resources/Public.png?raw=true "Felhasználói-felület modell")
 
-2.2.1.Oldalvázlatok
 
 
 2.2.2.Designtervek (végső megvalósítás kinézete)
