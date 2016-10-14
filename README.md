@@ -93,12 +93,15 @@ Nem funkcionális követelmények:
 3.1.2. Könyvtárstruktúra, funkciók
 
 * ~/resources/
-  * pictures - Képek a dokumentációhoz
+  * pictures - Képek helye a dokumentációhoz
   * database - SQLite3 adatbázis fájl helye
+  * umlet - UMLet nyers fájlok helye
+  * pencil - Pencil Projekt nyers fájlok helye
 * ~/webapp/
   * views - Nézetek
   * models - Modellek
   * controllers - Kontrollerek
+  * util - Egyéb forrásfáljok
   * css - CSS fájlok
   * js - JavaScript fájlok
   * fonts - Betűtípusok
