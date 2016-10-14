@@ -19,10 +19,12 @@ Funkcionális követelmények:
   * Alkalmazottak adatainak törlése
   * Alkalmazottak adatainak módosítása
   * Alkalmazottak adatainak hozzáadása
+  * Fizetések kiutalása
 * Beosztott
   * Bejárás hozzáadása
   * Bejárás törlése
   * Bejárás módosítása
+  * Adatok megtekintése
   
 Nem funkcionális követelmények:
   * Könnyű áttekinthetőség: Színekkel típus szerint csoportosítás
@@ -84,12 +86,22 @@ Nem funkcionális követelmények:
 
 3.1.1. Fejlesztőkörnyezet
 
-Használt IDE: Webstorm
+* Használt IDE: Webstorm
 
-Használt verziókövető: GitHub
-
+* Használt verziókövető: GitHub
 
 3.1.2. Könyvtárstruktúra, funkciók
+
+* ~/resources/
+  * pictures - Képek a dokumentációhoz
+  * database - SQLite3 adatbázis fájl helye
+* ~/webapp/
+  * views - Nézetek
+  * models - Modellek
+  * controllers - Kontrollerek
+  * css - CSS fájlok
+  * js - JavaScript fájlok
+  * fonts - Betűtípusok
  
 ## 4. Tesztelés
 
