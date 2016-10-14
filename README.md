@@ -50,25 +50,25 @@ Nem funkcionális követelmények:
 
 2.1.1. Komponensdiagram
 
-![Alt text](/resources/components.png?raw=true "Komponensdiagram")
+![Alt text](/resources/pictures/components.png?raw=true "Komponensdiagram")
 
 2.1.2. Oldaltérkép
 
-![Alt text](/resources/user-story.png?raw=true "Adatmodel")
+![Alt text](/resources/pictures/user-story.png?raw=true "Adatmodel")
 
 2.2. Felhasználói-felület modell
 
 2.2.1.Oldalvázlatok
 
 
-![Alt text](/resources/Login.png?raw=true "Felhasználói-felület modell")
-![Alt text](/resources/Admin.png?raw=true "Felhasználói-felület modell")
-![Alt text](/resources/Admin_Add_Worker.png?raw=true "Felhasználói-felület modell")
-![Alt text](/resources/Admin_Worker_Dates.png?raw=true "Felhasználói-felület modell")
-![Alt text](/resources/Public.png?raw=true "Felhasználói-felület modell")
-![Alt text](/resources/Public_Add_Date.png?raw=true "Felhasználói-felület modell")
-![Alt text](/resources/Public_Modify_Data.png?raw=true "Felhasználói-felület modell")
-![Alt text](/resources/Public_Salary.png?raw=true "Felhasználói-felület modell")
+![Alt text](/resources/pictures/Login.png?raw=true "Felhasználói-felület modell")
+![Alt text](/resources/pictures/Admin.png?raw=true "Felhasználói-felület modell")
+![Alt text](/resources/pictures/Admin_Add_Worker.png?raw=true "Felhasználói-felület modell")
+![Alt text](/resources/pictures/Admin_Worker_Dates.png?raw=true "Felhasználói-felület modell")
+![Alt text](/resources/pictures/Public.png?raw=true "Felhasználói-felület modell")
+![Alt text](/resources/pictures/Public_Add_Date.png?raw=true "Felhasználói-felület modell")
+![Alt text](/resources/pictures/Public_Modify_Data.png?raw=true "Felhasználói-felület modell")
+![Alt text](/resources/pictures/Public_Salary.png?raw=true "Felhasználói-felület modell")
 
 
 
@@ -78,7 +78,7 @@ Nem funkcionális követelmények:
 
 2.2.3. Osztálymodell
 
-![Alt text](/resources/uml.png?raw=true "Adatmodel")
+![Alt text](/resources/pictures/uml.png?raw=true "Adatmodel")
 
 2.2.4. Dinamikus működés
 
