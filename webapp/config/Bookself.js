@@ -24,7 +24,10 @@ var Worker = bookshelf.Model.extend({
     },
     salaryTable : function() {
         return this.hasMany(Salary, 'salaryID');
-    }
+    },
+    accountTable : function() {
+        return this.hasMany(Account, 'accountID');
+}
 });
 
 module.exports.Account = Account;
