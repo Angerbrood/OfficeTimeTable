@@ -6,6 +6,7 @@ var flash = require('connect-flash');
 var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy;
 var bookself = require('./config/Bookself.js');
+var admin = require('./dao/AdminDao.js')
 var app = express();
 
 
@@ -45,13 +46,22 @@ app.post('/admin/exit', function (req, res, done) {
 
 });
 app.post('/admin/addWorker', function (req, res, done) {
-
+    admin.addNewWorker(req.body, req, res);
 });
 app.post('/admin/modifyWorker', function (req, res, done) {
 
 });
+app.post('/admin/getAllSalary', function (req, res, done) {
+    admin.getAllSalary(req, res);
+});
+app.post('/admin/getAllTimeTable', function (req, res, done) {
+    admin.getAllTimeTable(req, res);
+});
+app.post('/admin/getAllWorker', function (req, res, done) {
+    admin.getAllWorkers(req, res);
+});
 app.post('/admin/deleteWorker', function (req, res, done) {
-
+    admin.deleteWorker(req.body.id, res);
 });
 app.post('/login', function (req, res, done) {
     res.send("Login request");

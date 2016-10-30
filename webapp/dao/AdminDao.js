@@ -1,12 +1,31 @@
-var database = require('../config/Bookself.js');
+var knex = require('knex')({
+    client: 'sqlite3',
+    connection: {
+        filename : "E:/Projects/ELTE/OfficeTimeTable/resources/database/timetable.db"
+    }
+});
 
-function addNewWorker(worker, req, res) {
+var bookshelf = require('bookshelf')(knex);
+var Worker = bookshelf.Model.extend({
+    tableName : 'Worker'
+});
+var Account = bookshelf.Model.extend({
+    tableName: 'Account'
+});
+var Salary = bookshelf.Model.extend({
+    tableName : 'Salary'
+});
+var TimeTable = bookshelf.Model.extend({
+    tableName : 'TimeTable'
+});
+
+var addNewWorker = function(worker, req, res) {
     var result = "";
     try {
-        var item = new database.Worker({
+        var item = new Worker({
             name : worker.name, age : worker.age,
             university : worker.university, position : worker.position,
-            hours : worker.hours, status : worker.status,
+            workingHours : worker.weekly_hour, status : worker.worker_status,
             tableID : worker.tableID, salaryID : worker.salaryID
         });
         item.save();
@@ -16,11 +35,11 @@ function addNewWorker(worker, req, res) {
     }
     res.send(result);
 
-}
-function modifyWorker(worker, req, res) {
+};
+var modifyWorker = function (worker, req, res) {
     var result = "";
     try {
-        var item = new database.Worker({ id : worker.id,
+        var item = new Worker({ id : worker.id,
             name : worker.name, age : worker.age,
             university : worker.university, position : worker.position,
             hours : worker.hours, status : worker.status,
@@ -33,29 +52,76 @@ function modifyWorker(worker, req, res) {
         result = "Hiba történt!" + err;
     }
     res.send(result);
-}
+};
 
-function deleteWorker(id, req, res) {
+var deleteWorker = function(id, req, res) {
     var result = "";
     try {
-        database.Worker.where('id', id).fetch().then(function (item) {
-            item.delete();
-        })
+        Worker.where('id', id).fetch().then(function (item) {
+            item.destroy();
+        });
         result = "Sikeres törlés";
     } catch (err) {
         result = "Hiba történt!" + err;
     }
     res.send(result);
-}
-function getWorker(id, req, res) {
+};
+var getWorker = function (id, req, res) {
     try {
-        database.Worker.where('id', id).fetch().then(function (item) {
+        Worker.where('id', id).fetch().then(function (item) {
             res.send(item);
         })
     } catch (err) {
         res.send("Hiba történt!" + err);
     }
-}
-function sendPayments() {
+};
+var getAllWorkers = function (req, res) {
+    Worker.fetchAll().then(function (item) {
+        console.log(item);
+        var result = [];
+        item.models.forEach(function (item) {
+            result.push( {
+                id : item.attributes.id,
+                name : item.attributes.name, age : item.attributes.age,
+                university : item.attributes.university, position : item.attributes.position,
+                hours : item.attributes.workingHours, status : item.attributes.status,
+                tableID : item.attributes.tableID, salaryID : item.attributes.salaryID
+            });
+        });
 
-}
+        res.send(result)
+    })
+};
+var getAllSalary = function (req, res) {
+    Salary.fetchAll().then(function (item) {
+        console.log(item);
+        var result = [];
+        item.models.forEach(function (item) {
+            result.push( {id : item.attributes.id, position : item.attributes.position, salary : item.attributes.salary});
+        });
+
+        res.send(result)
+    })
+};
+var getAllTimeTable = function (req, res) {
+    TimeTable.fetchAll().then(function (item) {
+        console.log(item);
+        var result = [];
+        item.models.forEach(function (item) {
+            result.push( {id : item.attributes.id, days : item.attributes.days, name : item.attributes.name});
+        });
+
+        res.send(result)
+    })
+};
+var sendPayments =function () {
+
+};
+
+module.exports.addNewWorker = addNewWorker;
+module.exports.modifyWorker = modifyWorker;
+module.exports.deleteWorker = deleteWorker;
+module.exports.getWorker = getWorker;
+module.exports.getAllWorkers = getAllWorkers;
+module.exports.getAllSalary = getAllSalary;
+module.exports.getAllTimeTable = getAllTimeTable;

@@ -150,10 +150,17 @@
                         <option>Beosztott</option>
                         <option>Vezető</option>
                     </select>
+                    <label for="worker_status">Fizetés:</label>
+                    <select class="form-control" id="salary_status">
+                    </select>
+                    <label for="worker_status">Munkaidő:</label>
+                    <select class="form-control" id="worker_hour_status">
+                    </select>
                 </div>
+
             </div>
             <div class="form-button" align="right">
-                <input type="submit" class="btn btn-primary" value="Hozzáadás">
+                <input type="submit" class="btn btn-primary" value="Hozzáadás" onclick="createWorker()">
                 <input type="submit" class="btn btn-danger" value="Reset">
             </div>
         </div>
@@ -161,13 +168,73 @@
             <div class="form-select">
                 <label for="worker_to_delete">Alkalmazott:</label>
                 <select class="form-control" id="worker_to_delete">
-                    <option>Alkalmazott</option>
                 </select>
             </div>
-            <input type="submit" class="btn btn-primary" value="Törlés">
+            <input type="submit" class="btn btn-primary" value="Törlés" onclick="deleteWorker()">
         </div>
 </div>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script>
+        function deleteWorker() {
+            var select = document.getElementById("worker_to_delete");
+            var selected = select[select.selectedIndex].textContent;
+            $.post('/admin/deleteWorker', {id : selected.split('-')[0]}, function (res) {
+                alert(res);
+            })
+        }
+        function createWorker() {
+            var name = document.getElementById("name").value;
+            var age = document.getElementById("age").value;
+            var university = document.getElementById("university").value;
+            var position = document.getElementById("position").value;
+            var weekly_hour = document.getElementById("weekly_hour").value;
+            var worker_status = document.getElementById("worker_status").value;
+
+            $.post('/admin/addWorker', {
+                id : -1,
+                name : name,
+                age : age,
+                university : university,
+                position : position,
+                weekly_hour : weekly_hour,
+                worker_status : worker_status,
+                tableID : 1,
+                salaryID : 1,
+                accountID : 1
+                ,
+            }, function (res) {
+                alert(res);
+            })
+
+        }
+        window.onload = function () {
+            $.post('/admin/getAllSalary', '', function (res) {
+                var select = document.getElementById("salary_status");
+                var i = 0;
+                res.forEach(function (item) {
+                    select[i] = new Option(item.id + " - " + item.position, i);
+                    ++i;
+                })
+            });
+            $.post('/admin/getAllTimeTable', '', function (res) {
+                var select = document.getElementById("worker_hour_status");
+                var i = 0;
+                res.forEach(function (item) {
+                    select[i] = new Option(item.id + " - " + item.name, i);
+                    ++i;
+                })
+            });
+            $.post('/admin/getAllWorker', '', function (res) {
+                var select = document.getElementById("worker_to_delete");
+                var i = 0;
+                res.forEach(function (item) {
+                    select[i] = new Option(item.id + " - " + item.name, i);
+                    ++i;
+                })
+            })
+        }
+    </script>
 </body>
 </html>
