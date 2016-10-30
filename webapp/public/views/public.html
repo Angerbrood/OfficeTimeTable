@@ -13,19 +13,27 @@
     {
         $("#add_worker_date").click(function()
         {
+            $("#get_salary_div_class").hide();
             $("#password_div_class").hide();
             $("#input_div_class").show();
         });
         $("#modify_worker_date").click(function()
         {
+            $("#get_salary_div_class").hide();
             $("#password_div_class").hide();
             $("#input_div_class").show();
         });
         $("#set_password").click(function()
         {
             $("#input_div_class").hide();
+            $("#get_salary_div_class").hide();
             $("#password_div_class").show();
         });
+        $("#getSalaryButton").click(function () {
+            $("#input_div_class").hide();
+            $("#password_div_class").hide();
+            $("#get_salary_div_class").show();
+        })
     });
 
 </script>
@@ -37,7 +45,18 @@
         <input type="submit" class="btn btn-primary" id="add_worker_date" value="Időpont hozzáadása">
         <input type="submit" class="btn btn-primary" id="modify_worker_date" value="Időpont módosítása">
         <input type="submit" class="btn btn-primary" id="set_password" value="Bejelentkezési adatok módosítása">
+        <input type="submit" class="btn btn-primary" id="getSalaryButton" value="Fizetés megtekintése" onclick="getSalary()">
         <input type="submit" class="btn btn-danger" value="Kilépés">
+    </div>
+    <div class="get_salary_div" id="get_salary_div_class" style="display: none">
+        <label for="name">Név:</label>
+        <input type="text" class="form-control" id="name" >
+        <label for="position">Beosztás:</label>
+        <input type="text" class="form-control" id="position" >
+        <label for="hourlySalary">Órabér:</label>
+        <input type="text" class="form-control" id="hourlySalary" >
+        <label for="salary">Fizetés:</label>
+        <input type="text" class="form-control" id="salary" >
     </div>
     <div class="password_div" id="password_div_class" style="display: none">
         <label for="username">Felhasználónév:</label>
@@ -159,6 +178,9 @@
     }
     function saveDate() {
         
+    }
+    function getSalary() {
+
     }
 </script>
 

@@ -6,25 +6,31 @@ var flash = require('connect-flash');
 var passport = require('passport')
 var LocalStrategy = require('passport-local').Strategy;
 var bookself = require('./config/Bookself.js');
-var loginController = require('./controller/login.js');
 var app = express();
 
 
+app.set('port', (process.env.PORT || 3000));
+app.use(express.static(__dirname + '/public'));
+app.set('views', __dirname + '/public/views');
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
 
-//middlewares
-app.use(express.static('public'));
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(expressValidator());
-app.use(flash());
-app.use(express.static(__dirname + '/views'));
-app.use('/login', loginController);
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
-app.set('port', 3000);
+app.use(bodyParser.json());
 
 
 
 app.get('/', function (req, res) {
     res.render('index.html');
+});
+app.get('/admin', function (req, res) {
+    res.render('admin.html');
+});
+app.get('/public', function (req, res) {
+    res.render('public.html');
 });
 app.get('/public/getSalary', function (req, res) {
 
