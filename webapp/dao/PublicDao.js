@@ -1,46 +1,98 @@
-var database = require('../config/Bookself.js');
+var knex = require('knex')({
+    client: 'sqlite3',
+    connection: {
+        filename : "E:/Projects/ELTE/OfficeTimeTable/resources/database/timetable.db"
+    }
+});
 
-function addDate(timetable , req, res) {
+var bookshelf = require('bookshelf')(knex);
+var Worker = bookshelf.Model.extend({
+    tableName : 'Worker'
+});
+var Account = bookshelf.Model.extend({
+    tableName: 'Account',
+    idAttribute : 'id'
+});
+var Salary = bookshelf.Model.extend({
+    tableName : 'Salary'
+});
+var TimeTable = bookshelf.Model.extend({
+    tableName : 'TimeTable'
+});
+
+
+var addDate = function (req, res) {
     var result = "";
     try {
-        var item = new database.TimeTable({days : timetable.days});
+        var temp = JSON.stringify(req.body.days);
+        console.log(JSON.stringify(req.body.days));
+        var item = new TimeTable({days : temp, name : "temp"});
         item.save();
         result = "Sikeres mentés!";
     } catch (err) {
         result = "Hiba történt." + err;
     }
     res.send(result);
-}
-function modifyDate(timetable, req, res) {
+};
+var modifyHours = function (req, res) {
     var result = "";
     try {
-        var item = new database.TimeTable({id : timetable.id, days : timetable.days});
+        var item = new TimeTable({id : req.body.id, days : req.body.days});
         item.update();
         result = "Sikeres mentés!";
     } catch (err) {
         result = "Hiba történt." + err;
     }
     res.send(result);
-}
-function modifyData(data, req, res) {
+};
+var modifyAccountData = function(req, res) {
     var result = "";
     try {
-        var item = new database.Account({
-            id : data.id, name : data.name, password : data.password
+
+        new Account({'id' : req.body.id}).save({
+            name : req.body.name,
+            password : req.body.passw,
+            type : req.body.type
+        }).then(function (temp) {
+
         });
-        item.update();
         result = "Sikeresen módosítva!";
     } catch (err) {
         result = "Hiba történt." + err;
     }
     res.send(result);
-}
-function getSalary(id, req, res) {
+};
+var getSalary = function (id, req, res) {
     try {
-        database.Worker.where('id', id).fetch().then(function (item) {
+        Worker.where('id', id).fetch().then(function (item) {
             res.send(item);
         })
     } catch (err) {
         res.send("Hiba történt!" + err);
     }
-}
+};
+var getWorkerData = function (req, res) {
+    try {
+        Worker.where('id', req.body.id).fetch().then(function (item) {
+            res.send(item);
+        });
+    } catch (err) {
+        res.send(err);
+    }
+};
+var getAccountData = function (req, res) {
+  try {
+      Account.where('id', req.body.id).fetch().then(function (item) {
+          res.send(item);
+      });
+  } catch (err) {
+      res.send(err);
+  }
+};
+
+module.exports.addDate = addDate;
+module.exports.modifyHours = modifyHours;
+module.exports.modifyAccountData = modifyAccountData;
+module.exports.getSalary = getSalary;
+module.exports.getWorkerData = getWorkerData;
+module.exports.getAccountData = getAccountData;

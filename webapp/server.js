@@ -1,12 +1,10 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var expressValidator = require('express-validator');
 var session = require('express-session');
 var flash = require('connect-flash');
-var passport = require('passport')
-var LocalStrategy = require('passport-local').Strategy;
-var bookself = require('./config/Bookself.js');
-var admin = require('./dao/AdminDao.js')
+var passport = require('passport');
+var admin = require('./dao/AdminDao.js');
+var worker = require('./dao/PublicDao.js');
 var app = express();
 
 
@@ -42,6 +40,9 @@ app.get('/admin/getDate', function (req, res) {
 app.post('/admin/sendPayment', function (req, res, done) {
 
 });
+app.post('/admin/addSalaryCategory', function (req, res, done) {
+    admin.addSalaryCategory(req, res);
+});
 app.post('/admin/exit', function (req, res, done) {
 
 });
@@ -70,19 +71,24 @@ app.post('/login', function (req, res, done) {
     console.log(req.body.type);
 
 });
-app.post("/public/addDate", function (req, res, done) {
-
+app.post('/public/addDate', function (req, res, done) {
+    worker.addDate(req, res);
 });
 app.post("/public/modifyDate", function (req, res, done) {
 
 });
-app.post("/public/modifyAccountData", function (req, res, done) {
-
+app.post("/public/getAccountData", function (req, res, done) {
+    worker.getAccountData(req, res);
+});
+app.post('/public/modifyAccountData', function (req, res, done) {
+    worker.modifyAccountData(req, res);
+});
+app.post('/public/getWorkerData', function (req, res, done) {
+    worker.getWorkerData(req, res);
 });
 app.post('public/exit', function (req, res, done) {
 
 });
-
 var http = require("http");
 http.createServer(app).listen(app.get('port'), function(){
     console.log("Express server listening on port " + app.get('port'));

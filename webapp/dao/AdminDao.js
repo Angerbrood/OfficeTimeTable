@@ -114,6 +114,17 @@ var getAllTimeTable = function (req, res) {
         res.send(result)
     })
 };
+var addSalaryCategory = function (req, res) {
+    var result = "";
+    try {
+        var item = new Salary({position : req.body.name, salary : req.body.salary});
+        item.save();
+        result = "Sikeres mentés!";
+    } catch (err) {
+        result = "Hiba történt." + err;
+    }
+    res.send(result);
+};
 var sendPayments =function () {
 
 };
@@ -125,3 +136,4 @@ module.exports.getWorker = getWorker;
 module.exports.getAllWorkers = getAllWorkers;
 module.exports.getAllSalary = getAllSalary;
 module.exports.getAllTimeTable = getAllTimeTable;
+module.exports.addSalaryCategory = addSalaryCategory;

@@ -13,6 +13,7 @@
     {
         $("#add_worker").click(function()
         {
+            $("#add_salary_category").hide();
             $("#get_worker_hours_class").hide();
             $("#input_div_class").children().hide();
             $("#create_or_update_worker_class").show();
@@ -21,32 +22,32 @@
         {
             $("#get_worker_hours_class").hide();
             $("#input_div_class").children().hide();
-
-            //Fill selector with workers
+            $("#add_salary_category").hide();
             $("#worker_selector_class").show();
-            //If one selected then get the corresponding data
             $("#create_or_update_worker_class").show();
-            //Do modifications
-
 
         });
         $("#delete_worker").click(function()
         {
+            $("#add_salary_category").hide();
             $("#get_worker_hours_class").hide();
             $("#input_div_class").children().hide();
-            //Fill selector
+            $("#worker_selector_class").hide();
             $("#delete_worker_class").show();
-            //Do delete
         });
         $("#get_worker_dates").click(function()
         {
+            $("#add_salary_category").hide();
             $("#input_div_class").children().hide();
-            //Fill selector
-            $("#worker_to_select").show();
-            //If seleted then show hours
+            $("#worker_to_select").hide();
             $("#get_worker_hours_class").show();
-            //Do delete
         });
+        $("#addPaymentCategory").click(function () {
+            $("#input_div_class").children().hide();
+            $("#worker_to_select").hide();
+            $("#get_worker_hours_class").hide();
+            $("#add_salary_category").show();
+        })
 
     });
 </script>
@@ -64,6 +65,7 @@
             </ul>
             <input type="submit" class="btn btn-primary" id="get_worker_dates" value="Időpontok megtekintése">
             <input type="submit" class="btn btn-primary" value="Fizetések kiutalása" id="deliverPaymentButton" onclick="sendPayment()">
+            <input type="submit" class="btn btn-primary" value="Fizetési kategória hozzáadása" id="addPaymentCategory">
             <input type="submit" class="btn btn-danger" value="Kilépés">
         </div>
     </div>
@@ -76,57 +78,108 @@
             </select>
         </div>
     </div>
+    <div class="add_salary_category" id="add_salary_category" style="display: none">
+        <label for="name">Megnevezés:</label>
+        <input type="text" class="form-control" id="position_name" >
+        <label for="position">Fizetés:</label>
+        <input type="text" class="form-control" id="position_salary">
+        <input type="submit" class="btn btn-primary" value="Mentés" onclick="addPaymentCategory()">
+    </div>
     <div class="get_worker_hours" id="get_worker_hours_class" style="display: none">
         <label for="name">Név:</label>
-        <input type="text" class="form-control" id="name_output" >
+        <input type="text" class="form-control" id="name_output" readonly="true">
         <label for="position">Pozíció:</label>
-        <input type="text" class="form-control" id="position_output">
+        <input type="text" class="form-control" id="position_output"readonly="true">
         <label for="weekly_hour">Heti óraszám:</label>
-        <input type="text" class="form-control" id="weekly_hour_output">
-        <table class="table table-bordered">
-            <tr>
-                <th>Óra</th>
-                <th>Hétfő</th>
-                <th>Kedd</th>
-                <th>Szerda</th>
-                <th>Csütörtök</th>
-                <th>Péntek</th>
-            </tr>
-            <tr>
-                <th>8:00</th>
-            </tr>
-            <tr>
-                <th>9:00</th>
-            </tr>
-            <tr>
-                <th>10:00</th>
-            </tr>
-            <tr>
-                <th>11:00</th>
-            </tr>
-            <tr>
-                <th>12:00</th>
-            </tr>
-            <tr>
-                <th>13:00</th>
-            </tr>
-            <tr>
-                <th>14:00</th>
-            </tr>
-            <tr>
-                <th>15:00</th>
-            </tr>
-            <tr>
-                <th>16:00</th>
-            </tr>
-            <tr>
-                <th>17:00</th>
-            </tr>
-            <tr>
-                <th>18:00</th>
-            </tr>
-        </table>
-    </div>
+        <input type="text" class="form-control" id="weekly_hour_output"readonly="true">
+        <div class="hours_div" id="hours_div">
+            <table class="table table-bordered" id="timetable">
+                <tr>
+                    <th>Nap</th>
+                    <th>8:00</th>
+                    <th>9:00</th>
+                    <th>10:00</th>
+                    <th>11:00</th>
+                    <th>12:00</th>
+                    <th>13:00</th>
+                    <th>14:00</th>
+                    <th>15:00</th>
+                    <th>16:00</th>
+                    <th>17:00</th>
+                    <th>18:00</th>
+                </tr>
+                <tr>
+                    <th>Hétfő</th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                </tr>
+                <tr>
+                    <th>Kedd</th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                </tr>
+                <tr>
+                    <th>Szerda</th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                </tr>
+                <tr>
+                    <th>Csütörtök</th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                </tr>
+                <tr>
+                    <th>Péntek</th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                    <th contenteditable="false"></th>
+                </tr>
+            </table>
+        </div>
 
 
 
@@ -208,6 +261,19 @@
                 alert(res);
             })
 
+        }
+        function addPaymentCategory() {
+            var name = document.getElementById("position_name").value;
+            var salary = document.getElementById("position_salary").value;
+
+            $.post('/admin/addSalaryCategory',
+            {
+                name : name,
+                salary : salary
+
+            }, function (res) {
+                alert(res);
+            });
         }
         window.onload = function () {
             $.post('/admin/getAllSalary', '', function (res) {

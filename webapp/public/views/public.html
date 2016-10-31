@@ -49,14 +49,14 @@
         <input type="submit" class="btn btn-danger" value="Kilépés">
     </div>
     <div class="get_salary_div" id="get_salary_div_class" style="display: none">
-        <label for="name">Név:</label>
-        <input type="text" class="form-control" id="name" >
-        <label for="position">Beosztás:</label>
-        <input type="text" class="form-control" id="position" >
-        <label for="hourlySalary">Órabér:</label>
-        <input type="text" class="form-control" id="hourlySalary" >
-        <label for="salary">Fizetés:</label>
-        <input type="text" class="form-control" id="salary" >
+        <label for="worker_name">Név:</label>
+        <input type="text" class="form-control" id="worker_name" readonly="true">
+        <label for="worker_position">Beosztás:</label>
+        <input type="text" class="form-control" id="worker_position" readonly="true">
+        <label for="worker_hourlySalary">Órabér:</label>
+        <input type="text" class="form-control" id="worker_hourlySalary" readonly="true">
+        <label for="worker_salary">Fizetés:</label>
+        <input type="text" class="form-control" id="worker_salary" readonly="true">
     </div>
     <div class="password_div" id="password_div_class" style="display: none">
         <label for="username">Felhasználónév:</label>
@@ -71,87 +71,27 @@
     <div class="input_div" id="input_div_class" style="display: none">
         <table class="table table-bordered" id="timetable">
             <tr>
-                <th>Óra</th>
-                <th>Hétfő</th>
-                <th>Kedd</th>
-                <th>Szerda</th>
-                <th>Csütörtök</th>
-                <th>Péntek</th>
-            </tr>
-            <tr>
+                <th>Nap</th>
                 <th>8:00</th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-            </tr>
-            <tr>
                 <th>9:00</th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-            </tr>
-            <tr>
                 <th>10:00</th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-            </tr>
-            <tr>
                 <th>11:00</th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-            </tr>
-            <tr>
                 <th>12:00</th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-            </tr>
-            <tr>
                 <th>13:00</th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-            </tr>
-            <tr>
                 <th>14:00</th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-            </tr>
-            <tr>
                 <th>15:00</th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-            </tr>
-            <tr>
                 <th>16:00</th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-                <th contenteditable="true"></th>
-            </tr>
-            <tr>
                 <th>17:00</th>
+                <th>18:00</th>
+            </tr>
+            <tr>
+                <th>Hétfő</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
                 <th contenteditable="true"></th>
                 <th contenteditable="true"></th>
                 <th contenteditable="true"></th>
@@ -159,7 +99,55 @@
                 <th contenteditable="true"></th>
             </tr>
             <tr>
-                <th>18:00</th>
+                <th>Kedd</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+            </tr>
+            <tr>
+                <th>Szerda</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+            </tr>
+            <tr>
+                <th>Csütörtök</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+            </tr>
+            <tr>
+                <th>Péntek</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
                 <th contenteditable="true"></th>
                 <th contenteditable="true"></th>
                 <th contenteditable="true"></th>
@@ -171,16 +159,58 @@
     </div>
 </div>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/ 3.1.0/jquery.min.js"></script>
 <script>
     function saveData() {
-        
+        var accountName = document.getElementById("username").value;
+        var password = document.getElementById("password").value;
+
+        $.post('/public/modifyAccountData', {id : 1, name : accountName, passw : password, type : "type"}, function (res) {
+            alert(res);
+        })
     }
     function saveDate() {
-        
+        var days = [];
+        var table = document.getElementById("timetable");
+        var rowNumber = table.rows.length;
+        for(var i = 1; i < rowNumber; ++i) {
+            var cells = table.rows.item(i).cells;
+            var cellNumber = cells.length;
+
+            var hours = [];
+            for(var j = 1; j < cellNumber; ++j) {
+
+                var cellValue = cells.item(j).innerHTML;
+                hours.push(cellValue);
+            }
+
+            days.push({dayNumber : i, hours : hours});
+        }
+
+        console.log(days);
+        var temp = JSON.stringify(days);
+        //console.log(temp);
+        //console.log(JSON.parse(temp));
+
+        $.post('/public/addDate', {days : days}, function (res) {
+            alert(res);
+        })
+
     }
     function getSalary() {
 
+    }
+    window.onload = function () {
+        $.post('/public/getWorkerData', {id : 3}, function (res) {
+            console.log(res);
+            console.log(res.name);
+            document.getElementById("worker_name").value = res.name;
+            document.getElementById("worker_position").value = res.position;
+        });
+        $.post('/public/getAccountData', {id : 3}, function (res) {
+            document.getElementById("username").value = res.name;
+            document.getElementById("password").value = res.password;
+        });
     }
 </script>
 
