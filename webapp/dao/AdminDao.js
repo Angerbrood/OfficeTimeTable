@@ -7,7 +7,13 @@ var knex = require('knex')({
 
 var bookshelf = require('bookshelf')(knex);
 var Worker = bookshelf.Model.extend({
-    tableName : 'Worker'
+    tableName : 'Worker',
+    timetable : function () {
+        return this.belongsTo(TimeTable, 'tableID');
+    },
+    salary : function () {
+        return this.belongsTo(Salary, 'salaryID');
+    }
 });
 var Account = bookshelf.Model.extend({
     tableName: 'Account'
@@ -16,7 +22,7 @@ var Salary = bookshelf.Model.extend({
     tableName : 'Salary'
 });
 var TimeTable = bookshelf.Model.extend({
-    tableName : 'TimeTable'
+    tableName : 'TimeTable',
 });
 
 var addNewWorker = function(worker, req, res) {
@@ -36,16 +42,17 @@ var addNewWorker = function(worker, req, res) {
     res.send(result);
 
 };
-var modifyWorker = function (worker, req, res) {
+var modifyWorker = function (req, res) {
     var result = "";
     try {
-        var item = new Worker({ id : worker.id,
-            name : worker.name, age : worker.age,
-            university : worker.university, position : worker.position,
-            hours : worker.hours, status : worker.status,
-            tableID : worker.tableID, salaryID : worker.salaryID
+        new Worker({'id' : req.body.id}).save({
+            name : req.body.name, age : req.body.age,
+            university : req.body.university, position : req.body.position,
+            workingHours : req.body.hours, status : req.body.status,
+            tableID : req.body.tableID, salaryID : req.body.salaryID
+        }).then(function(temp) {
+            console.log(temp);
         });
-        item.update();
         result = "Sikeresen módosítva!";
     }
     catch (err) {
@@ -54,10 +61,10 @@ var modifyWorker = function (worker, req, res) {
     res.send(result);
 };
 
-var deleteWorker = function(id, req, res) {
+var deleteWorker = function(req, res) {
     var result = "";
     try {
-        Worker.where('id', id).fetch().then(function (item) {
+        Worker.where('id', req.body.id).fetch().then(function (item) {
             item.destroy();
         });
         result = "Sikeres törlés";
@@ -68,7 +75,7 @@ var deleteWorker = function(id, req, res) {
 };
 var getWorker = function (id, req, res) {
     try {
-        Worker.where('id', id).fetch().then(function (item) {
+        Worker.where('id', id).fetch({withRelated:['timetable']}).then(function (item) {
             res.send(item);
         })
     } catch (err) {
@@ -91,6 +98,11 @@ var getAllWorkers = function (req, res) {
 
         res.send(result)
     })
+};
+var getWorkerById = function (req, res) {
+  Worker.where('id', req.body.id).fetch({withRelated:['timetable']}).then(function (item) {
+     res.send(item);
+  });
 };
 var getAllSalary = function (req, res) {
     Salary.fetchAll().then(function (item) {
@@ -137,3 +149,4 @@ module.exports.getAllWorkers = getAllWorkers;
 module.exports.getAllSalary = getAllSalary;
 module.exports.getAllTimeTable = getAllTimeTable;
 module.exports.addSalaryCategory = addSalaryCategory;
+module.exports.getWorkerById = getWorkerById;

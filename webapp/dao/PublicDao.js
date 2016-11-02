@@ -7,19 +7,23 @@ var knex = require('knex')({
 
 var bookshelf = require('bookshelf')(knex);
 var Worker = bookshelf.Model.extend({
-    tableName : 'Worker'
+    tableName : 'Worker',
+    timetable : function () {
+        return this.belongsTo(TimeTable, 'tableID');
+    },
+    salary : function () {
+        return this.belongsTo(Salary, 'salaryID');
+    }
 });
 var Account = bookshelf.Model.extend({
-    tableName: 'Account',
-    idAttribute : 'id'
+    tableName: 'Account'
 });
 var Salary = bookshelf.Model.extend({
     tableName : 'Salary'
 });
 var TimeTable = bookshelf.Model.extend({
-    tableName : 'TimeTable'
+    tableName : 'TimeTable',
 });
-
 
 var addDate = function (req, res) {
     var result = "";

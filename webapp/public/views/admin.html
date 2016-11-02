@@ -13,38 +13,40 @@
     {
         $("#add_worker").click(function()
         {
+            $("#delete_worker_class").hide();
             $("#add_salary_category").hide();
             $("#get_worker_hours_class").hide();
-            $("#input_div_class").children().hide();
             $("#create_or_update_worker_class").show();
         });
         $("#modify_worker").click(function()
         {
-            $("#get_worker_hours_class").hide();
-            $("#input_div_class").children().hide();
+            $("#delete_worker_class").hide();
             $("#add_salary_category").hide();
+            $("#get_worker_hours_class").hide();
             $("#worker_selector_class").show();
-            $("#create_or_update_worker_class").show();
 
         });
         $("#delete_worker").click(function()
         {
+            $("#delete_worker_class").hide();
             $("#add_salary_category").hide();
             $("#get_worker_hours_class").hide();
-            $("#input_div_class").children().hide();
+            $("#create_or_update_worker_class").hide();
             $("#worker_selector_class").hide();
             $("#delete_worker_class").show();
         });
         $("#get_worker_dates").click(function()
         {
+            $("#delete_worker_class").hide();
             $("#add_salary_category").hide();
-            $("#input_div_class").children().hide();
-            $("#worker_to_select").hide();
-            $("#get_worker_hours_class").show();
+            $("#create_or_update_worker_class").hide();
+            $("#delete_worker_class").hide();
+            $("#worker_hour_selector_div").show();
         });
         $("#addPaymentCategory").click(function () {
-            $("#input_div_class").children().hide();
-            $("#worker_to_select").hide();
+            $("#delete_worker_class").hide();
+            $("#create_or_update_worker_class").hide();
+            $("#delete_worker_class").hide();
             $("#get_worker_hours_class").hide();
             $("#add_salary_category").show();
         })
@@ -73,7 +75,7 @@
     <div class ="worker_selector" id="worker_selector_class" style="display:none;">
         <div class="form-select">
             <label for="worker_to_select">Alkalmazott:</label>
-            <select class="form-control" id="worker_to_select">
+            <select class="form-control" id="worker_to_select" onchange="listData()">
                 <option>Alkalmazott</option>
             </select>
         </div>
@@ -84,6 +86,10 @@
         <label for="position">Fizetés:</label>
         <input type="text" class="form-control" id="position_salary">
         <input type="submit" class="btn btn-primary" value="Mentés" onclick="addPaymentCategory()">
+    </div>
+    <div class="form-select" id="worker_hour_selector_div" style="display: none">
+        <label for="worker_hour_selector">Alkalmazottak:</label>
+        <select class="form-control" id="worker_hour_selector" onchange="listHours()"></select>
     </div>
     <div class="get_worker_hours" id="get_worker_hours_class" style="display: none">
         <label for="name">Név:</label>
@@ -181,51 +187,49 @@
             </table>
         </div>
 
+</div>
 
-
-    <div class="input_div" id ="input_div_class">
-
-        <div class="create_or_update_worker" id="create_or_update_worker_class" style="display: none" >
-            <div class="form-group">
-                <label for="name">Név:</label>
-                <input type="text" class="form-control" id="name">
-                <label for="age">Kor:</label>
-                <input type="text" class="form-control" id="age">
-                <label for="university">Egyetem:</label>
-                <input type="text" class="form-control" id="university">
-                <label for="position">Pozíció:</label>
-                <input type="text" class="form-control" id="position">
-                <label for="weekly_hour">Heti óraszám:</label>
-                <input type="text" class="form-control" id="weekly_hour">
-                <div class="form-select">
-                    <label for="worker_status">Státus:</label>
-                    <select class="form-control" id="worker_status">
-                        <option>Beosztott</option>
-                        <option>Vezető</option>
-                    </select>
-                    <label for="worker_status">Fizetés:</label>
-                    <select class="form-control" id="salary_status">
-                    </select>
-                    <label for="worker_status">Munkaidő:</label>
-                    <select class="form-control" id="worker_hour_status">
-                    </select>
-                </div>
-
-            </div>
-            <div class="form-button" align="right">
-                <input type="submit" class="btn btn-primary" value="Hozzáadás" onclick="createWorker()">
-                <input type="submit" class="btn btn-danger" value="Reset">
-            </div>
-        </div>
-        <div class="delete_worker" id="delete_worker_class" style="display: none">
+    <div class="create_or_update_worker" id="create_or_update_worker_class" style="display: none">
+        <div class="form-group">
+            <label for="name">Név:</label>
+            <input type="text" class="form-control" id="name">
+            <label for="age">Kor:</label>
+            <input type="text" class="form-control" id="age">
+            <label for="university">Egyetem:</label>
+            <input type="text" class="form-control" id="university">
+            <label for="position">Pozíció:</label>
+            <input type="text" class="form-control" id="position">
+            <label for="weekly_hour">Heti óraszám:</label>
+            <input type="text" class="form-control" id="weekly_hour">
             <div class="form-select">
-                <label for="worker_to_delete">Alkalmazott:</label>
-                <select class="form-control" id="worker_to_delete">
+                <label for="worker_status">Státus:</label>
+                <select class="form-control" id="worker_status">
+                    <option>Beosztott</option>
+                    <option>Vezető</option>
+                </select>
+                <label for="worker_status">Fizetés:</label>
+                <select class="form-control" id="salary_status">
+                </select>
+                <label for="worker_status">Munkaidő:</label>
+                <select class="form-control" id="worker_hour_status">
                 </select>
             </div>
-            <input type="submit" class="btn btn-primary" value="Törlés" onclick="deleteWorker()">
+
         </div>
-</div>
+        <div class="form-button" align="right">
+            <input type="submit" class="btn btn-primary" value="Hozzáadás" onclick="createOrUpdateWorker()">
+            <input type="submit" class="btn btn-danger" value="Reset">
+        </div>
+    </div>
+    <div class="delete_worker" id="delete_worker_class" style="display: none">
+        <div class="form-select">
+            <label for="worker_to_delete">Alkalmazott:</label>
+            <select class="form-control" id="worker_to_delete">
+            </select>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Törlés" onclick="deleteWorker()">
+    </div>
+
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
@@ -237,7 +241,7 @@
                 alert(res);
             })
         }
-        function createWorker() {
+        function createOrUpdateWorker() {
             var name = document.getElementById("name").value;
             var age = document.getElementById("age").value;
             var university = document.getElementById("university").value;
@@ -245,21 +249,44 @@
             var weekly_hour = document.getElementById("weekly_hour").value;
             var worker_status = document.getElementById("worker_status").value;
 
-            $.post('/admin/addWorker', {
-                id : -1,
-                name : name,
-                age : age,
-                university : university,
-                position : position,
-                weekly_hour : weekly_hour,
-                worker_status : worker_status,
-                tableID : 1,
-                salaryID : 1,
-                accountID : 1
-                ,
-            }, function (res) {
-                alert(res);
-            })
+            var select = document.getElementById("worker_to_select");
+            var selected = select[select.selectedIndex].innerHTML;
+
+            if(selected == "Alkalmazott") {
+
+                $.post('/admin/addWorker', {
+                    id : -1,
+                    name : name,
+                    age : age,
+                    university : university,
+                    position : position,
+                    weekly_hour : weekly_hour,
+                    worker_status : worker_status,
+                    tableID : 1,
+                    salaryID : 1,
+                    accountID : 1
+                    ,
+                }, function (res) {
+                    alert(res);
+                })
+            } else {
+                $.post('/admin/modifyWorker', {
+                    id : selected.split('-')[0],
+                    name : name,
+                    age : age,
+                    university : university,
+                    position : position,
+                    hours : weekly_hour,
+                    status : worker_status,
+                    tableID : 1,
+                    salaryID : 1,
+                    accountID : 1
+                    ,
+                }, function (res) {
+                    alert(res);
+                })
+            }
+
 
         }
         function addPaymentCategory() {
@@ -274,6 +301,56 @@
             }, function (res) {
                 alert(res);
             });
+        }
+        function listData() {
+            var select = document.getElementById("worker_to_select");
+            var selected = select[select.selectedIndex].innerHTML;
+            if(selected == "Alkalmazott") {
+                $("#create_or_update_worker_class").hide();
+                alert("Válasszon alkalmazottat!");
+            } else {
+                $("#create_or_update_worker_class").show();
+                $.post('/admin/getWorkerByID', {id : selected.split('-')[0]}, function (res) {
+                    document.getElementById("name").value = res.name;
+                    document.getElementById("age").value = res.age;
+                    document.getElementById("university").value = res.university;
+                    document.getElementById("position").value = res.position;
+                    document.getElementById("weekly_hour").value = res.workingHours;
+                    document.getElementById("worker_status").value = res.status;
+                });
+            }
+        }
+        function listHours() {
+            var select = document.getElementById("worker_hour_selector");
+            var selected = select[select.selectedIndex].innerHTML;
+            if(selected == "Alkalmazott") {
+                $("#get_worker_hours_class").hide();
+                alert("Válasszon alkalmazottat!");
+            } else {
+                $("#get_worker_hours_class").show();
+                $.post('/admin/getWorkerByID', {id : selected.split('-')[0]}, function (res) {
+                    document.getElementById("name_output").value = res.name;
+                    document.getElementById("position_output").value = res.position;
+                    document.getElementById("weekly_hour_output").value = res.workingHours;
+                    var temp = JSON.parse(res.timetable.days);
+
+                    var table = document.getElementById("timetable");
+                    var rowNumber = table.rows.length;
+                    for(var i = 1; i < rowNumber; ++i) {
+                        var cells = table.rows.item(i).cells;
+                        var cellNumber = cells.length;
+
+                        var hours = temp[i-1];
+                        for(var j = 1; j < cellNumber; ++j) {
+
+                            cells.item(j).innerHTML = hours.hours[j-1];
+                        }
+
+                    }
+
+                });
+            }
+
         }
         window.onload = function () {
             $.post('/admin/getAllSalary', '', function (res) {
@@ -293,10 +370,16 @@
                 })
             });
             $.post('/admin/getAllWorker', '', function (res) {
-                var select = document.getElementById("worker_to_delete");
+                var workerToDeleteSelect = document.getElementById("worker_to_delete");
+                var workerToSelect = document.getElementById("worker_to_select");
+                var hourToSelect = document.getElementById("worker_hour_selector");
+                workerToSelect[0] = new Option("Alkalmazott");
+                hourToSelect[0] = new Option("Alkalmazott");
                 var i = 0;
                 res.forEach(function (item) {
-                    select[i] = new Option(item.id + " - " + item.name, i);
+                    workerToDeleteSelect[i] = new Option(item.id + " - " + item.name, i);
+                    workerToSelect[i+1] = new Option(item.id + " - " + item.name, i);
+                    hourToSelect[i+1] = new Option(item.id + " - " + item.name, i);
                     ++i;
                 })
             })

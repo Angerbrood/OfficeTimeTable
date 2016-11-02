@@ -6,28 +6,34 @@ var knex = require('knex')({
 });
 
 var bookshelf = require('bookshelf')(knex);
-
-
+var Worker = bookshelf.Model.extend({
+    tableName : 'Worker',
+    timetable : function () {
+        return this.belongsTo(TimeTable, 'tableID');
+    },
+    salary : function () {
+        return this.belongsTo(Salary, 'salaryID');
+    }
+});
 var Account = bookshelf.Model.extend({
     tableName: 'Account'
-
+});
+var Salary = bookshelf.Model.extend({
+    tableName : 'Salary'
+});
+var TimeTable = bookshelf.Model.extend({
+    tableName : 'TimeTable',
 });
 
-/*
-var temp = new Account({name : "Temp", password : "temp", type : "type"});
-temp.save();*/
-
-
-function findUser (name, password, type) {
+var findUser = function (req, res) {
     var result = "";
 
-    Account.where('name', name).where('password', password).where('type', type).fetch().then(function (item, result) {
-        //console.log(item.toJSON());
-        result = item.toJSON();
-        return result;
+    Account.where('name', req.username).where('password', req.password).fetch().then(function (item) {
+        return item;
     });
 
     return result;
 };
 
-console.log(findUser("Temp", "temp", "type"));
+module.exports.findUser = findUser;
+
