@@ -26,13 +26,15 @@ var TimeTable = bookshelf.Model.extend({
 });
 
 var findUser = function (req, res) {
-    var result = "";
-
-    Account.where('name', req.username).where('password', req.password).fetch().then(function (item) {
-        return item;
+    Account.where('name', req.body.username).where('password', req.body.password).where('type', req.body.type).fetch().then(function (item) {
+        //res.send(item);
+        if(item) {
+            res.send({id : item.attributes.id, type : item.attributes.type});
+        } else {
+            res.send("Nincs ilyen felhasználó!");
+        }
     });
 
-    return result;
 };
 
 module.exports.findUser = findUser;

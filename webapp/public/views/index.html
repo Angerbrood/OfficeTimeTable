@@ -48,7 +48,11 @@
                     type : t
                 }
                 , function (result) {
-            alert(result);
+            if(result.id && result.type) {
+                $.post('/redirect', result, function (res) {
+                    
+                })
+            }
         })
     }
 

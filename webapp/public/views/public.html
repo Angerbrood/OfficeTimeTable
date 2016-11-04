@@ -15,23 +15,27 @@
         {
             $("#get_salary_div_class").hide();
             $("#password_div_class").hide();
-            $("#input_div_class").show();
+            $("#updateHoursDiv").hide();
+            $("#createHoursDiv").show();
         });
         $("#modify_worker_date").click(function()
         {
             $("#get_salary_div_class").hide();
             $("#password_div_class").hide();
-            $("#input_div_class").show();
+            $("#createHoursDiv").hide();
+            $("#updateHoursDiv").show();
         });
         $("#set_password").click(function()
         {
             $("#input_div_class").hide();
             $("#get_salary_div_class").hide();
+            $("#updateHoursDiv").hide();
             $("#password_div_class").show();
         });
         $("#getSalaryButton").click(function () {
             $("#input_div_class").hide();
             $("#password_div_class").hide();
+            $("#updateHoursDiv").hide();
             $("#get_salary_div_class").show();
         })
     });
@@ -68,8 +72,10 @@
             <input type="submit" class="btn btn-primary" value="Mentés" onclick="saveData()">
         </div>
     </div>
-    <div class="input_div" id="input_div_class" style="display: none">
-        <table class="table table-bordered" id="timetable">
+    <div class="input_div" id="updateHoursDiv" style="display: none">
+        <label for="dailyHours">Heti óraszám:</label>
+        <input type="text" class="form-control" id="dailyHours" >
+        <table class="table table-bordered" id="updateHoursTimetable">
             <tr>
                 <th>Nap</th>
                 <th>8:00</th>
@@ -155,7 +161,98 @@
                 <th contenteditable="true"></th>
             </tr>
         </table>
-        <input type="submit" class="btn btn-primary" value="Mentés" onclick="saveDate()">
+        <input type="submit" class="btn btn-primary" value="Mentés" onclick="updateHours()">
+    </div>
+    <div class="input_div" id="createHoursDiv" style="display: none">
+        <label for="dailyHours">Heti óraszám:</label>
+        <input type="text" class="form-control" id="addDailyHours" >
+        <table class="table table-bordered" id="addHoursTable">
+            <tr>
+                <th>Nap</th>
+                <th>8:00</th>
+                <th>9:00</th>
+                <th>10:00</th>
+                <th>11:00</th>
+                <th>12:00</th>
+                <th>13:00</th>
+                <th>14:00</th>
+                <th>15:00</th>
+                <th>16:00</th>
+                <th>17:00</th>
+                <th>18:00</th>
+            </tr>
+            <tr>
+                <th>Hétfő</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+            </tr>
+            <tr>
+                <th>Kedd</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+            </tr>
+            <tr>
+                <th>Szerda</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+            </tr>
+            <tr>
+                <th>Csütörtök</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+            </tr>
+            <tr>
+                <th>Péntek</th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+                <th contenteditable="true"></th>
+            </tr>
+        </table>
+        <input type="submit" class="btn btn-primary" value="Mentés" onclick="createOrUpdate()">
     </div>
 </div>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
@@ -169,10 +266,11 @@
             alert(res);
         })
     }
-    function saveDate() {
+    function createOrUpdate() {
         var days = [];
-        var table = document.getElementById("timetable");
+        var table = document.getElementById("addHoursTable");
         var rowNumber = table.rows.length;
+        var hourCounter = 0;
         for(var i = 1; i < rowNumber; ++i) {
             var cells = table.rows.item(i).cells;
             var cellNumber = cells.length;
@@ -182,6 +280,7 @@
 
                 var cellValue = cells.item(j).innerHTML;
                 hours.push(cellValue);
+                ++hourCounter;
             }
 
             days.push({dayNumber : i, hours : hours});
@@ -192,10 +291,53 @@
         //console.log(temp);
         //console.log(JSON.parse(temp));
 
+        var weeklyHours = document.getElementById("dailyHours").value;
+        if(hourCounter > weeklyHours) {
+            alert("A megadott órák száma meghaladja a heti óraszámot!");
+            return;
+        }
+
+
         $.post('/public/addDate', {days : days}, function (res) {
             alert(res);
         })
 
+    }
+    function updateHours() {
+        var days = [];
+        var table = document.getElementById("updateHoursTable");
+        var rowNumber = table.rows.length;
+        var hourCounter = 0;
+        for(var i = 1; i < rowNumber; ++i) {
+            var cells = table.rows.item(i).cells;
+            var cellNumber = cells.length;
+
+            var hours = [];
+            for(var j = 1; j < cellNumber; ++j) {
+
+                var cellValue = cells.item(j).innerHTML;
+                hours.push(cellValue);
+                ++hourCounter;
+            }
+
+            days.push({dayNumber : i, hours : hours});
+        }
+
+        console.log(days);
+        var temp = JSON.stringify(days);
+        //console.log(temp);
+        //console.log(JSON.parse(temp));
+
+        var weeklyHours = document.getElementById("dailyHours").value;
+        if(hourCounter > weeklyHours) {
+            alert("A megadott órák száma meghaladja a heti óraszámot!");
+            return;
+        }
+
+
+        $.post('/public/modifyDate', {days : days}, function (res) {
+            alert(res);
+        })
     }
     function getSalary() {
 
@@ -203,13 +345,54 @@
     window.onload = function () {
         $.post('/public/getWorkerData', {id : 3}, function (res) {
             console.log(res);
-            console.log(res.name);
             document.getElementById("worker_name").value = res.name;
             document.getElementById("worker_position").value = res.position;
+            document.getElementById("worker_hourlySalary").value = res.salary.salary + ' Ft';
+            var salary = 0;
+            var temp = JSON.parse(res.timetable.days);
+            var table = document.getElementById("updateHoursTimetable");
+            var rowNumber = table.rows.length;
+            for(var i = 1; i < rowNumber; ++i) {
+                var cells = table.rows.item(i).cells;
+                var cellNumber = cells.length;
+                var dailySalary = 0;
+                var hours = temp[i-1];
+                for(var j = 1; j < cellNumber; ++j) {
+
+                   if(hours.hours[j-1] == 'x') {
+                        dailySalary += res.salary.salary;
+                   }
+                }
+                salary += dailySalary;
+
+            }
+            document.getElementById("worker_salary").value = salary * 4 + ' Ft';
+
+
         });
         $.post('/public/getAccountData', {id : 3}, function (res) {
             document.getElementById("username").value = res.name;
             document.getElementById("password").value = res.password;
+        });
+        $.post('/admin/getWorkerByID', {id : 3}, function (res) {
+            var temp = JSON.parse(res.timetable.days);
+            var hourCounter = 0;
+            var table = document.getElementById("updateHoursTimetable");
+            var rowNumber = table.rows.length;
+            for(var i = 1; i < rowNumber; ++i) {
+                var cells = table.rows.item(i).cells;
+                var cellNumber = cells.length;
+
+                var hours = temp[i-1];
+                for(var j = 1; j < cellNumber; ++j) {
+
+                    cells.item(j).innerHTML = hours.hours[j-1];
+                    ++hourCounter;
+                }
+
+            }
+            document.getElementById("dailyHours").value = hourCounter;
+
         });
     }
 </script>

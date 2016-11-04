@@ -29,7 +29,6 @@ var addDate = function (req, res) {
     var result = "";
     try {
         var temp = JSON.stringify(req.body.days);
-        console.log(JSON.stringify(req.body.days));
         var item = new TimeTable({days : temp, name : "temp"});
         item.save();
         result = "Sikeres mentés!";
@@ -41,8 +40,16 @@ var addDate = function (req, res) {
 var modifyHours = function (req, res) {
     var result = "";
     try {
-        var item = new TimeTable({id : req.body.id, days : req.body.days});
-        item.update();
+        //var item = new TimeTable({id : req.body.id, days : req.body.days});
+        //item.update();
+        new TimeTable({'id' : req.body.id}).save( {days : req.body.days});
+        
+        Worker.where('tableID', req,body,id).fetch().then(function (res) {
+           if(res) {
+               new Worker({id : res.attributes.id}).save({workingHours : req.body.hours});
+           }
+        });
+        
         result = "Sikeres mentés!";
     } catch (err) {
         result = "Hiba történt." + err;
@@ -77,7 +84,7 @@ var getSalary = function (id, req, res) {
 };
 var getWorkerData = function (req, res) {
     try {
-        Worker.where('id', req.body.id).fetch().then(function (item) {
+        Worker.where('id', req.body.id).fetch({withRelated:['timetable', 'salary']}).then(function (item) {
             res.send(item);
         });
     } catch (err) {

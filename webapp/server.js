@@ -51,18 +51,17 @@ app.get('/admin', function (req, res) {
 app.get('/public', function (req, res) {
     res.render('public.html');
 });
-app.post('/login',
-    passport.authenticate('local'),
-    function(req, res) {
-        // If this function gets called, authentication was successful.
-        // `req.user` contains the authenticated user.
-        res.redirect('/public/' + req.user.username);
-    });
-app.get('/public/getSalary', function (req, res) {
-
+app.post('/login', function (req, res) {
+    var temp = login.findUser(req, res);
+    console.log(temp);
 });
-app.get('/admin/getDate', function (req, res) {
-
+app.post('/redirect', function (req, res) {
+    console.log(req);
+    if(req.body.type == 'Alkalmazott') {
+        res.redirect('localhost:3000/public');
+    } else {
+        res.redirect('localhost:3000/admin');
+    }
 });
 app.post('/admin/getWorkerByID', function (req, res) {
    admin.getWorkerById(req, res);
@@ -70,50 +69,43 @@ app.post('/admin/getWorkerByID', function (req, res) {
 app.post('/admin/sendPayment', function (req, res, done) {
 
 });
-app.post('/admin/addSalaryCategory', function (req, res, done) {
+app.post('/admin/addSalaryCategory', function (req, res) {
     admin.addSalaryCategory(req, res);
 });
 app.post('/admin/exit', function (req, res, done) {
 
 });
-app.post('/admin/addWorker', function (req, res, done) {
+app.post('/admin/addWorker', function (req, res) {
     admin.addNewWorker(req.body, req, res);
 });
-app.post('/admin/modifyWorker', function (req, res, done) {
+app.post('/admin/modifyWorker', function (req, res) {
     admin.modifyWorker(req, res);
 });
-app.post('/admin/getAllSalary', function (req, res, done) {
+app.post('/admin/getAllSalary', function (req, res) {
     admin.getAllSalary(req, res);
 });
-app.post('/admin/getAllTimeTable', function (req, res, done) {
+app.post('/admin/getAllTimeTable', function (req, res) {
     admin.getAllTimeTable(req, res);
 });
-app.post('/admin/getAllWorker', function (req, res, done) {
+app.post('/admin/getAllWorker', function (req, res) {
     admin.getAllWorkers(req, res);
 });
-app.post('/admin/deleteWorker', function (req, res, done) {
+app.post('/admin/deleteWorker', function (req, res) {
     admin.deleteWorker(req, res);
 });
-app.post('/login', function (req, res, done) {
-    res.send("Login request");
-    console.log(req.body.username);
-    console.log(req.body.password);
-    console.log(req.body.type);
-
-});
-app.post('/public/addDate', function (req, res, done) {
+app.post('/public/addDate', function (req, res) {
     worker.addDate(req, res);
 });
-app.post("/public/modifyDate", function (req, res, done) {
-
+app.post("/public/modifyDate", function (req, res) {
+    worker.modifyHours(req, res);
 });
-app.post("/public/getAccountData", function (req, res, done) {
+app.post("/public/getAccountData", function (req, res) {
     worker.getAccountData(req, res);
 });
-app.post('/public/modifyAccountData', function (req, res, done) {
+app.post('/public/modifyAccountData', function (req, res) {
     worker.modifyAccountData(req, res);
 });
-app.post('/public/getWorkerData', function (req, res, done) {
+app.post('/public/getWorkerData', function (req, res) {
     worker.getWorkerData(req, res);
 });
 app.post('public/exit', function (req, res, done) {
