@@ -286,7 +286,6 @@
             days.push({dayNumber : i, hours : hours});
         }
 
-        console.log(days);
         var temp = JSON.stringify(days);
         //console.log(temp);
         //console.log(JSON.parse(temp));
@@ -305,7 +304,7 @@
     }
     function updateHours() {
         var days = [];
-        var table = document.getElementById("updateHoursTable");
+        var table = document.getElementById("updateHoursTimetable");
         var rowNumber = table.rows.length;
         var hourCounter = 0;
         for(var i = 1; i < rowNumber; ++i) {
@@ -323,7 +322,6 @@
             days.push({dayNumber : i, hours : hours});
         }
 
-        console.log(days);
         var temp = JSON.stringify(days);
         //console.log(temp);
         //console.log(JSON.parse(temp));
@@ -335,7 +333,7 @@
         }
 
 
-        $.post('/public/modifyDate', {days : days}, function (res) {
+        $.post('/public/modifyDate', {id : 3, days : days}, function (res) {
             alert(res);
         })
     }
@@ -344,7 +342,6 @@
     }
     window.onload = function () {
         $.post('/public/getWorkerData', {id : 3}, function (res) {
-            console.log(res);
             document.getElementById("worker_name").value = res.name;
             document.getElementById("worker_position").value = res.position;
             document.getElementById("worker_hourlySalary").value = res.salary.salary + ' Ft';

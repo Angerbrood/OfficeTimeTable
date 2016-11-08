@@ -16,6 +16,7 @@
             $("#delete_worker_class").hide();
             $("#add_salary_category").hide();
             $("#get_worker_hours_class").hide();
+            $("#delete_worker_class").hide();
             $("#create_or_update_worker_class").show();
         });
         $("#modify_worker").click(function()
@@ -23,6 +24,7 @@
             $("#delete_worker_class").hide();
             $("#add_salary_category").hide();
             $("#get_worker_hours_class").hide();
+            $("#delete_worker_class").hide();
             $("#worker_selector_class").show();
 
         });
@@ -333,7 +335,7 @@
                 $.post('/admin/getWorkerByID', {id : selected.split('-')[0]}, function (res) {
                     document.getElementById("name_output").value = res.name;
                     document.getElementById("position_output").value = res.position;
-                    document.getElementById("weekly_hour_output").value = res.workingHours;
+                    var counter = 0;
                     var temp = JSON.parse(res.timetable.days);
 
                     var table = document.getElementById("timetable");
@@ -345,10 +347,15 @@
                         var hours = temp[i-1];
                         for(var j = 1; j < cellNumber; ++j) {
 
-                            cells.item(j).innerHTML = hours.hours[j-1];
+                            var cellValue =  hours.hours[j-1];
+                            if(cellValue == 'x') {
+                                ++counter;
+                            }
+                            cells.item(j).innerHTML = cellValue;
                         }
 
                     }
+                    document.getElementById("weekly_hour_output").value = counter;
 
                 });
             }

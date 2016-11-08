@@ -40,16 +40,8 @@ var addDate = function (req, res) {
 var modifyHours = function (req, res) {
     var result = "";
     try {
-        //var item = new TimeTable({id : req.body.id, days : req.body.days});
-        //item.update();
-        new TimeTable({'id' : req.body.id}).save( {days : req.body.days});
-        
-        Worker.where('tableID', req,body,id).fetch().then(function (res) {
-           if(res) {
-               new Worker({id : res.attributes.id}).save({workingHours : req.body.hours});
-           }
+        new TimeTable({'id' : req.body.id}).save( {days : JSON.stringify(req.body.days), name : 'updated'}).then(function (item) {
         });
-        
         result = "Sikeres mentés!";
     } catch (err) {
         result = "Hiba történt." + err;

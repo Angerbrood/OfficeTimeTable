@@ -51,7 +51,7 @@ var modifyWorker = function (req, res) {
             workingHours : req.body.hours, status : req.body.status,
             tableID : req.body.tableID, salaryID : req.body.salaryID
         }).then(function(temp) {
-            console.log(temp);
+
         });
         result = "Sikeresen módosítva!";
     }
@@ -84,7 +84,6 @@ var getWorker = function (id, req, res) {
 };
 var getAllWorkers = function (req, res) {
     Worker.fetchAll().then(function (item) {
-        console.log(item);
         var result = [];
         item.models.forEach(function (item) {
             result.push( {
@@ -106,7 +105,6 @@ var getWorkerById = function (req, res) {
 };
 var getAllSalary = function (req, res) {
     Salary.fetchAll().then(function (item) {
-        console.log(item);
         var result = [];
         item.models.forEach(function (item) {
             result.push( {id : item.attributes.id, position : item.attributes.position, salary : item.attributes.salary});
@@ -117,7 +115,6 @@ var getAllSalary = function (req, res) {
 };
 var getAllTimeTable = function (req, res) {
     TimeTable.fetchAll().then(function (item) {
-        console.log(item);
         var result = [];
         item.models.forEach(function (item) {
             result.push( {id : item.attributes.id, days : item.attributes.days, name : item.attributes.name});

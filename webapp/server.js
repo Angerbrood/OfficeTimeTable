@@ -19,50 +19,71 @@ app.set('view engine', 'html');
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+app.use(session({ cookie: { maxAge: 60000 },
+    secret: 'woot',
+    resave: false,
+    saveUninitialized: false}));
 
+var knex = require('knex')({
+    client: 'sqlite3',
+    connection: {
+        filename : "E:/Projects/ELTE/OfficeTimeTable/resources/database/timetable.db"
+    }
+});
+
+var bookshelf = require('bookshelf')(knex);
+var Account = bookshelf.Model.extend({
+    tableName: 'Account'
+});
 app.use(bodyParser.json());
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 
+/*
 passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
+    Account.where('id', id).fetch().then(function(err, user) {
         done(err, user);
     });
 });
-passport.use(new LocalStrategy(
-    function(username, password, done) {
-        login.findUser({username : username, password : password}, '', function(res) {
-            if(res) {
+passport.use('local', new LocalStrategy({
+        passReqToCallback : true
+    },
+    function (req, username, password, done) {
+        User.findOne({ username: username }, function (err, user) {
+            function (user) {
                 return done(null, user);
-            }
         });
-    }
-));
+
+}));
+*/
 
 
 app.get('/', function (req, res) {
-    res.render('index.html');
+    res.render('index.html',  { message: req.flash() });
 });
 app.get('/admin', function (req, res) {
-    res.render('admin.html');
+    res.render('admin.html')/*,   {
+        isAuthenticated: req.isAuthenticated(),
+        user: req.user
+    });*/
 });
 app.get('/public', function (req, res) {
-    res.render('public.html');
-});
+    res.render('public.html',  { message: req.flash() });
+});/*
+app.post('/login',
+    passport.authenticate('local', { successRedirect: '/public',
+        failureRedirect: '/',
+        failureFlash: true })
+);*/
 app.post('/login', function (req, res) {
-    var temp = login.findUser(req, res);
-    console.log(temp);
+    res.send('TODO: Login');
 });
-app.post('/redirect', function (req, res) {
-    console.log(req);
-    if(req.body.type == 'Alkalmazott') {
-        res.redirect('localhost:3000/public');
-    } else {
-        res.redirect('localhost:3000/admin');
-    }
-});
+
 app.post('/admin/getWorkerByID', function (req, res) {
    admin.getWorkerById(req, res);
 });

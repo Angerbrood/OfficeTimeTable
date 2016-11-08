@@ -41,19 +41,9 @@
         var pass = document.getElementById("password").value;
         var t = document.getElementById("account_type").value;
 
-        $.post("/login",
-                {
-                    username : uname,
-                    password : pass,
-                    type : t
-                }
-                , function (result) {
-            if(result.id && result.type) {
-                $.post('/redirect', result, function (res) {
-                    
-                })
-            }
-        })
+        $.post('/login', {username : uname, password : pass}, function (res) {
+            alert(res);
+        });
     }
 
 </script>
