@@ -87,8 +87,8 @@ app.post('/login', function (req, res) {
 app.post('/admin/getWorkerByID', function (req, res) {
    admin.getWorkerById(req, res);
 });
-app.post('/admin/sendPayment', function (req, res, done) {
-
+app.post('/admin/sendPayment', function (req, res) {
+    admin.sendPayments(req, res);
 });
 app.post('/admin/addSalaryCategory', function (req, res) {
     admin.addSalaryCategory(req, res);

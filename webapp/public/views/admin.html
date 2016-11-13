@@ -238,6 +238,11 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
     <script>
+        function sendPayment() {
+            $.post('/admin/sendPayment', '', function (res) {
+                
+            });
+        }
         function deleteWorker() {
             var select = document.getElementById("worker_to_delete");
             var selected = select[select.selectedIndex].textContent;

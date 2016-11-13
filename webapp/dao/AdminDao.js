@@ -24,6 +24,9 @@ var Salary = bookshelf.Model.extend({
 var TimeTable = bookshelf.Model.extend({
     tableName : 'TimeTable',
 });
+var OverallSalaries = bookshelf.Model.extend({
+    tableName : 'OverallSalaries'
+});
 
 var addNewWorker = function(worker, req, res) {
     var result = "";
@@ -67,7 +70,7 @@ var deleteWorker = function(req, res) {
         Worker.where('id', req.body.id).fetch().then(function (item) {
             item.destroy();
         });
-        result = "Sikeres törlés";
+        result = "Sikeres törlés!";
     } catch (err) {
         result = "Hiba történt!" + err;
     }
@@ -77,7 +80,7 @@ var getWorker = function (id, req, res) {
     try {
         Worker.where('id', id).fetch({withRelated:['timetable']}).then(function (item) {
             res.send(item);
-        })
+        });
     } catch (err) {
         res.send("Hiba történt!" + err);
     }
@@ -134,8 +137,44 @@ var addSalaryCategory = function (req, res) {
     }
     res.send(result);
 };
-var sendPayments =function () {
+var sendPayments = function (req, res) {
+    try {
+        OverallSalaries.fetchAll().then(function (result) {
+           result.models.forEach(function (item) {
+               item.destroy();
+           })
+        });
 
+        Worker.fetchAll({withRelated:['timetable', 'salary']}).then(function (result) {
+            var temp = [];
+            result.models.forEach(function (item) {
+                console.log(item);
+                var salary = 0;
+                var table = JSON.parse(item.relations.timetable.attributes.days);
+                var rowNumber = table.length;
+                for(var i = 0; i < rowNumber; ++i) {
+                    var cells = table[i].hours;
+                    var cellNumber = cells.length;
+                    var counter = 0;
+                    for (var j = 0; j < cellNumber; ++j) {
+
+                        var cellValue = cells[j - 1];
+                        if (cellValue == 'x') {
+                            counter += item.relations.salary.attributes.salary;
+                        }
+                    }
+                    salary += counter;
+
+                }
+                new OverallSalaries({name : item.attributes.name, salary : salary * 4}).save().then(function () {
+
+                });
+
+            })
+        })
+    } catch (err) {
+        console.log(err);
+    }
 };
 
 module.exports.addNewWorker = addNewWorker;
@@ -147,3 +186,4 @@ module.exports.getAllSalary = getAllSalary;
 module.exports.getAllTimeTable = getAllTimeTable;
 module.exports.addSalaryCategory = addSalaryCategory;
 module.exports.getWorkerById = getWorkerById;
+module.exports.sendPayments = sendPayments;
