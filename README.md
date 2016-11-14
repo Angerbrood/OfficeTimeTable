@@ -118,4 +118,27 @@ Nem funkcionális követelmények:
 
 ## 5. Felhasználói dokumentáció
 
+* Futtatáshoz szükséges operációs rendszer: Tetszőleges operációs rendszer
+* A futtatáshoz szükséges hardver: Operációs rendszerek szerint megadva
+* Egyéb követelmények: Internet böngésző telepítése, JavaScript ajánlott
+
+Program használata:
+* Böngészőben nyissuk meg a főoldalt
+* Főoldalon jelentkezzünk be
+* Az account típusától függően a program bejelentkeztet minket az admin vagy a public oldalra
+* Public
+    * Időpont hozzáadása: Új időbeosztást lehet megadni (a meglévőt felülírja!)
+    * Időpont módosítsa: A meglévő időbeosztást lehet módosítani
+    * Bejelentkezési adatok módosítása: A felhasználónév és jelszó módosítása
+    * Fizetés megtekintése: Az órabér, heti óraszám és az ehavi fizetés megtekintése
+* Admin
+    * Alkalmazott hozzáadása: Új alkamazottat rögzíthetünk
+    * Alkalmazott módosítása: Kiválasztott alkamazott adatainak módosítása
+    * Alkalmazott törlése: Kiválasztott alkalmazott törlése
+    * Időpontok megtekintése: A kiválaszott alkalmazott időpontjának megtekintése
+    * Fizetések kiutalása: Az összes alkalmazott fiztésének kiutalása
+   
+    
+    
+    
 ## 6. Irodalomjegyzék
