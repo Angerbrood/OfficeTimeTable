@@ -127,6 +127,8 @@ Nem funkcionális követelmények:
 
 4.4.Tesztesetek
 
+![Alt text](/resources/pictures/tests/output.png?raw=true "Felhasználói-felület modell")
+
 ## 5. Felhasználói dokumentáció
 
 * Futtatáshoz szükséges operációs rendszer: Tetszőleges operációs rendszer
