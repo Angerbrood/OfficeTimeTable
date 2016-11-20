@@ -40,7 +40,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
 
-/*
+
 passport.serializeUser(function(user, done) {
     done(null, user.id);
 });
@@ -50,6 +50,7 @@ passport.deserializeUser(function(id, done) {
         done(err, user);
     });
 });
+/*
 passport.use('local', new LocalStrategy({
         passReqToCallback : true
     },
@@ -61,29 +62,38 @@ passport.use('local', new LocalStrategy({
 
 }));
 */
+var temp = new LocalStrategy({
+        passReqToCallback : true
+    },
+    function (req, username, password, done) {
+        Account.where('name', username).where('password', password).fetch().then(function (user) {
+            done(null, user);
+        })
 
+    });
 
 app.get('/', function (req, res) {
     res.render('index.html',  { message: req.flash() });
 });
 app.get('/admin', function (req, res) {
-    res.render('admin.html')/*,   {
-        isAuthenticated: req.isAuthenticated(),
-        user: req.user
-    });*/
+    res.render('admin.html');
 });
 app.get('/public', function (req, res) {
     res.render('public.html',  { message: req.flash() });
-});/*
-app.post('/login',
-    passport.authenticate('local', { successRedirect: '/public',
-        failureRedirect: '/',
-        failureFlash: true })
-);*/
-app.post('/login', function (req, res) {
-    res.send('TODO: Login');
 });
-
+/*
+app.post('/login', function (req, res) {
+    /*
+    Account.authorize(temp, function (success, error) {
+        if(success) {
+            res.render('admin.html');
+        }
+        if(error) {
+            res.render('index.html');
+        }
+    })
+});*/
+app.post('/login', Account.authenticate());
 app.post('/admin/getWorkerByID', function (req, res) {
    admin.getWorkerById(req, res);
 });
