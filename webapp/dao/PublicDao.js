@@ -40,7 +40,9 @@ var addDate = function (req, res) {
 var modifyHours = function (req, res) {
     var result = "";
     try {
-        new TimeTable({'id' : req.body.id}).save( {days : JSON.stringify(req.body.days), name : 'updated'}).then(function (item) {
+        Account.where('accountID', req.user.id).fetch().then(function (item) {
+            new TimeTable({'id' : item.tableID}).save( {days : JSON.stringify(req.body.days), name : 'updated'}).then(function (item) {
+            });
         });
         result = "Sikeres mentés!";
     } catch (err) {
@@ -52,7 +54,7 @@ var modifyAccountData = function(req, res) {
     var result = "";
     try {
 
-        new Account({'id' : req.body.id}).save({
+        new Account({'id' : req.user.id}).save({
             name : req.body.name,
             password : req.body.passw,
             type : req.body.type
@@ -65,9 +67,9 @@ var modifyAccountData = function(req, res) {
     }
     res.send(result);
 };
-var getSalary = function (id, req, res) {
+var getSalary = function (req, res) {
     try {
-        Worker.where('id', id).fetch().then(function (item) {
+        Worker.where('accountID', req.user.id).fetch().then(function (item) {
             res.send(item);
         })
     } catch (err) {
@@ -76,7 +78,7 @@ var getSalary = function (id, req, res) {
 };
 var getWorkerData = function (req, res) {
     try {
-        Worker.where('id', req.body.id).fetch({withRelated:['timetable', 'salary']}).then(function (item) {
+        Worker.where('accountID', req.user.id).fetch({withRelated:['timetable', 'salary']}).then(function (item) {
             res.send(item);
         });
     } catch (err) {

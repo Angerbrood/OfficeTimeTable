@@ -1,12 +1,17 @@
 var express = require('express');
 var bodyParser = require('body-parser');
 var session = require('express-session');
+var cookieParser = require('cookie-parser');
+var cookieSession = require('cookie-session');
 var flash = require('connect-flash');
 var passport = require('passport')
     , LocalStrategy = require('passport-local').Strategy;
 var admin = require('./dao/AdminDao.js');
 var worker = require('./dao/PublicDao.js');
 var login = require('./dao/LoginDao.js');
+var Promise  = require('bluebird');
+
+
 var app = express();
 
 
@@ -33,67 +38,82 @@ var knex = require('knex')({
 
 var bookshelf = require('bookshelf')(knex);
 var Account = bookshelf.Model.extend({
-    tableName: 'Account'
+    tableName: 'Account',
+    login : Promise.method(function (username, password, type) {
+        if(!username || !password || !type) throw new Error("Username, password, type required");
+        return new this({name: username.toLowerCase().trim()}).fetch({require: true}).tap(function(customer) {
+
+        });
+    })
 });
 app.use(bodyParser.json());
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(flash());
+app.use(passport.initialize());   // passport initialize middleware
+app.use(passport.session());      // passport session middleware
 
 
 passport.serializeUser(function(user, done) {
-    done(null, user.id);
+    done(null, user);
 });
 
-passport.deserializeUser(function(id, done) {
-    Account.where('id', id).fetch().then(function(err, user) {
-        done(err, user);
-    });
+passport.deserializeUser(function(obj, done) {
+    done(null, obj);
 });
-/*
-passport.use('local', new LocalStrategy({
-        passReqToCallback : true
-    },
-    function (req, username, password, done) {
-        User.findOne({ username: username }, function (err, user) {
-            function (user) {
-                return done(null, user);
+
+
+passport.use('publicAuth', new LocalStrategy(
+    function(username, password, done) {
+        Account.where({ name: username, password : password }).fetch().then( function (user) {
+            if (!user) {
+                return done(null, false, { message: 'Incorrect username.' });
+            }
+            if (!password) {
+                return done(null, false, { message: 'Incorrect password.' });
+            }
+            return done(null, user);
         });
+    }
+));
+passport.use('adminAuth', new LocalStrategy(
+    function(username, password, done) {
+        Account.where({ name: username, password : password  }).fetch().then( function (user) {
+            if (!user) {
+                return done(null, false, { message: 'Incorrect username.' });
+            }
+            if (!password) {
+                return done(null, false, {message: 'Incorrect password.'});
+            }
 
-}));
-*/
-var temp = new LocalStrategy({
-        passReqToCallback : true
-    },
-    function (req, username, password, done) {
-        Account.where('name', username).where('password', password).fetch().then(function (user) {
-            done(null, user);
-        })
-
-    });
-
+            return done(null, user);
+        });
+    }
+));
 app.get('/', function (req, res) {
-    res.render('index.html',  { message: req.flash() });
+    res.render('index',  { message: req.flash() });
 });
 app.get('/admin', function (req, res) {
-    res.render('admin.html');
+    res.render('admin');
 });
 app.get('/public', function (req, res) {
-    res.render('public.html',  { message: req.flash() });
+    res.render('public',  { message: req.flash() });
 });
-/*
-app.post('/login', function (req, res) {
-    /*
-    Account.authorize(temp, function (success, error) {
-        if(success) {
-            res.render('admin.html');
-        }
-        if(error) {
-            res.render('index.html');
-        }
+
+app.post('/adminLogin',
+    passport.authenticate('adminAuth', {
+        successRedirect: '/admin',
+        failureRedirect: '/',
+        badRequestMessage : 'Missing username or password.',
+        failureFlash: true
+
     })
-});*/
-app.post('/login', Account.authenticate());
+);
+app.post('/publicLogin',
+    passport.authenticate('publicAuth', {
+        successRedirect: '/public',
+        failureRedirect: '/',
+        badRequestMessage : 'Missing username or password.',
+        failureFlash: true })
+);
 app.post('/admin/getWorkerByID', function (req, res) {
    admin.getWorkerById(req, res);
 });
@@ -104,7 +124,9 @@ app.post('/admin/addSalaryCategory', function (req, res) {
     admin.addSalaryCategory(req, res);
 });
 app.post('/admin/exit', function (req, res, done) {
-
+    req.logout();
+    req.session.destroy();
+    res.send('/');
 });
 app.post('/admin/addWorker', function (req, res) {
     admin.addNewWorker(req.body, req, res);
@@ -140,9 +162,13 @@ app.post('/public/getWorkerData', function (req, res) {
     worker.getWorkerData(req, res);
 });
 app.post('public/exit', function (req, res, done) {
-
+    req.logout();
+    req.session.destroy();
+    res.send('/');
 });
-
+app.post('/getAccountID', function (req, res) {
+   res.send({userID : req.user.id});
+});
 var http = require("http");
 http.createServer(app).listen(app.get('port'), function(){
     console.log("Express server listening on port " + app.get('port'));

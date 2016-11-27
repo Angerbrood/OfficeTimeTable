@@ -72,7 +72,7 @@
             <input type="submit" class="btn btn-primary" id="get_worker_dates" value="Időpontok megtekintése">
             <input type="submit" class="btn btn-primary" value="Fizetések kiutalása" id="deliverPaymentButton" onclick="sendPayment()">
             <input type="submit" class="btn btn-primary" value="Fizetési kategória hozzáadása" id="addPaymentCategory">
-            <input type="submit" class="btn btn-danger" value="Kilépés">
+            <input type="submit" class="btn btn-danger" value="Kilépés" onclick="exitFromApp()">
         </div>
     </div>
 
@@ -365,6 +365,11 @@
                 });
             }
 
+        }
+        function exitFromApp() {
+            $.post('/admin/exit', '',  function (res) {
+                window.location = res;
+            });
         }
         window.onload = function () {
             $.post('/admin/getAllSalary', '', function (res) {

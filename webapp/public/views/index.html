@@ -39,11 +39,19 @@
     function login() {
         var uname = document.getElementById("username").value;
         var pass = document.getElementById("password").value;
-        var t = document.getElementById("account_type").value;
+        var type = document.getElementById("account_type").value;
 
-        $.post('/login', {username : uname, password : pass}, function (res) {
-            alert(res);
-        });
+        if(type === 'Alkalmazott') {
+            $.post('/publicLogin', {username : uname, password : pass, type : type}, function (res) {
+                window.location = '/public'
+
+            });
+        } else {
+            $.post('/adminLogin', {username : uname, password : pass, type : type}, function (res) {
+                window.location = '/admin'
+            });
+        }
+
     }
 
 </script>

@@ -261,10 +261,12 @@
     function saveData() {
         var accountName = document.getElementById("username").value;
         var password = document.getElementById("password").value;
+        $.post('/getAccountID', '', function (result) {
+            $.post('/public/modifyAccountData', {id : result.userID, name : accountName, passw : password, type : "type"}, function (res) {
+                alert(res);
+            })
+        });
 
-        $.post('/public/modifyAccountData', {id : 1, name : accountName, passw : password, type : "type"}, function (res) {
-            alert(res);
-        })
     }
     function createOrUpdate() {
         var days = [];
@@ -285,10 +287,6 @@
 
             days.push({dayNumber : i, hours : hours});
         }
-
-        var temp = JSON.stringify(days);
-        //console.log(temp);
-        //console.log(JSON.parse(temp));
 
         var weeklyHours = document.getElementById("dailyHours").value;
         if(hourCounter > weeklyHours) {
@@ -322,26 +320,33 @@
             days.push({dayNumber : i, hours : hours});
         }
 
-        var temp = JSON.stringify(days);
-        //console.log(temp);
-        //console.log(JSON.parse(temp));
-
         var weeklyHours = document.getElementById("dailyHours").value;
         if(hourCounter > weeklyHours) {
             alert("A megadott órák száma meghaladja a heti óraszámot!");
             return;
         }
 
+        $.post('/getAccountID', '', function (result) {
 
-        $.post('/public/modifyDate', {id : 3, days : days}, function (res) {
-            alert(res);
-        })
+            $.post('/public/modifyDate', {id : result.userID, days : days}, function (res) {
+                alert(res);
+            })
+        });
+
+
     }
     function getSalary() {
+        $.post('/getAccountID', '', function (result) {
 
+        });
     }
     window.onload = function () {
-        $.post('/public/getWorkerData', {id : 3}, function (res) {
+        var userID = -1;
+
+        $.post('/getAccountID', '', function (result) {
+            userID = result.userID;
+        });
+        $.post('/public/getWorkerData', {id : userID}, function (res) {
             document.getElementById("worker_name").value = res.name;
             document.getElementById("worker_position").value = res.position;
             document.getElementById("worker_hourlySalary").value = res.salary.salary + ' Ft';
@@ -349,6 +354,7 @@
             var temp = JSON.parse(res.timetable.days);
             var table = document.getElementById("updateHoursTimetable");
             var rowNumber = table.rows.length;
+            var hourCounter = 0;
             for(var i = 1; i < rowNumber; ++i) {
                 var cells = table.rows.item(i).cells;
                 var cellNumber = cells.length;
@@ -356,40 +362,23 @@
                 var hours = temp[i-1];
                 for(var j = 1; j < cellNumber; ++j) {
 
-                   if(hours.hours[j-1] == 'x') {
+                    cells.item(j).innerHTML = hours.hours[j-1];
+                    ++hourCounter;
+
+                    if(hours.hours[j-1] == 'x') {
                         dailySalary += res.salary.salary;
-                   }
+                    }
                 }
                 salary += dailySalary;
 
             }
             document.getElementById("worker_salary").value = salary * 4 + ' Ft';
-
-
-        });
-        $.post('/public/getAccountData', {id : 3}, function (res) {
-            document.getElementById("username").value = res.name;
-            document.getElementById("password").value = res.password;
-        });
-        $.post('/admin/getWorkerByID', {id : 3}, function (res) {
-            var temp = JSON.parse(res.timetable.days);
-            var hourCounter = 0;
-            var table = document.getElementById("updateHoursTimetable");
-            var rowNumber = table.rows.length;
-            for(var i = 1; i < rowNumber; ++i) {
-                var cells = table.rows.item(i).cells;
-                var cellNumber = cells.length;
-
-                var hours = temp[i-1];
-                for(var j = 1; j < cellNumber; ++j) {
-
-                    cells.item(j).innerHTML = hours.hours[j-1];
-                    ++hourCounter;
-                }
-
-            }
             document.getElementById("dailyHours").value = hourCounter;
 
+        });
+        $.post('/public/getAccountData', {id : userID}, function (res) {
+            document.getElementById("username").value = res.name;
+            document.getElementById("password").value = res.password;
         });
     }
 </script>
